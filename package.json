@@ -1,0 +1,8 @@
+{
+    "name": "wp-post-subscription",
+    "dependencies": {},
+    "devDependencies": {
+        "vue": "^1.0.15",
+        "vue-resource": "^0.6.1"
+    }
+}
