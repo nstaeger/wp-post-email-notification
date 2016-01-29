@@ -19,6 +19,8 @@ class AjaxRequestHandler
 
     public function handle(Request $request)
     {
+        // TODO check if the user is allowed to do this
+
         switch ($request->getAction()) {
             case 'get_subscribers':
                 return new JsonResponse((new SubscriberModel($this->database))->getAll());
@@ -26,6 +28,8 @@ class AjaxRequestHandler
                 return $this->handleAddSubscriberRequest($request);
             case 'delete_subscriber':
                 return $this->handleDeleteSubscriber($request);
+            case 'subscribe':
+                return $this->handleSubscribe($request);
         }
 
         return new Response(null, Response::HTTP_NOT_FOUND);
@@ -39,12 +43,14 @@ class AjaxRequestHandler
             : $request->getClientIp();
 
         if (empty($email) || !is_email($email)) {
+            // TODO throw Exception instead?
             return new Response(null, Response::HTTP_BAD_REQUEST);
         }
 
         if (!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false
             && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false
         ) {
+            // TODO throw Exception instead?
             return new Response(null, Response::HTTP_BAD_REQUEST);
         }
 
@@ -57,6 +63,7 @@ class AjaxRequestHandler
     private function handleDeleteSubscriber(Request $request)
     {
         if (!isset($request->getData()->id) || empty($request->getData()->id)) {
+            // TODO throw Exception instead?
             return new Response(null, Response::HTTP_BAD_REQUEST);
         }
 
@@ -66,5 +73,30 @@ class AjaxRequestHandler
         $subscriberModel->delete($id);
 
         return new JsonResponse($subscriberModel->getAll());
+    }
+
+    private function handleSubscribe($request)
+    {
+        $email = isset($request->getData()->email) ? sanitize_email($request->getData()->email) : null;
+        $ip = isset($request->getData()->ip) && !empty($request->getData()->ip)
+            ? $request->getData()->ip
+            : $request->getClientIp();
+
+        if (empty($email) || !is_email($email)) {
+            // TODO throw Exception instead?
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+
+        if (!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false
+            && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false
+        ) {
+            // TODO throw Exception instead?
+            return new Response(null, Response::HTTP_BAD_REQUEST);
+        }
+
+        $subscriberModel = new SubscriberModel($this->database);
+        $subscriberModel->add($email, $ip);
+
+        return new JsonResponse();
     }
 }

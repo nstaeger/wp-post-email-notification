@@ -1,10 +1,11 @@
 module.exports = [
 
     {
-        entry:  {
-            "admin-options": "./js/views/admin/options"
+        entry:   {
+            "admin-options":   "./js/views/admin/options",
+            "frontend-widget": "./js/views/frontend/widget"
         },
-        output: {
+        output:  {
             filename: "./js/bundle/[name].js"
         },
         resolve: {
