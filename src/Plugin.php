@@ -2,15 +2,15 @@
 
 namespace Nstaeger\WpPostSubscription;
 
+use Nstaeger\Framework\Plugin as BasePlugin;
 use Nstaeger\WpPostSubscription\Ajax\AjaxRequestHandler;
 use Nstaeger\WpPostSubscription\Ajax\FrontendAjaxRequestHandler;
 use Nstaeger\WpPostSubscription\Database\Database;
 use Nstaeger\WpPostSubscription\Database\SubscriberModel;
 use Nstaeger\WpPostSubscription\Http\Request;
 use Nstaeger\WpPostSubscription\View\ViewRenderer;
-use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
-class Plugin
+class Plugin extends BasePlugin
 {
     private static $self;
 
@@ -19,16 +19,16 @@ class Plugin
     private $database;
     private $view;
 
-    public function __construct($url, $dir, $db)
-    {
-        self::$self = $this;
-
-        $this->url = $url;
-        $this->directory = $dir;
-        $this->database = new Database($db);
-
-        $this->view = new ViewRenderer($this->directory);
-    }
+//    public function __construct($url, $dir, $db)
+//    {
+//        self::$self = $this;
+//
+//        $this->url = $url;
+//        $this->directory = $dir;
+//        $this->database = new Database($db);
+//
+//        $this->view = new ViewRenderer($this->directory);
+//    }
 
     public static function self()
     {
