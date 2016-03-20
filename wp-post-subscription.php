@@ -12,16 +12,19 @@ use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Creator\WordpressCreator;
 use Nstaeger\WpPostSubscription\Plugin;
 
-require $dir . '/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
-$dir = __DIR__;
-$url = plugin_dir_url(__FILE__);
-$controllerNamespace = "Nstaeger\\WpPostSubscription\\Controller";
+$configuration = new Configuration([
+    'plugin_dir' => __DIR__,
+    'plugin_url' => plugin_dir_url(__FILE__),
+    'controller_namespace' => "Nstaeger\\WpPostSubscription\\Controller",
+    'rest_prefix' => 'wpps_v1'
+]);
 
-$configuration = new Configuration($dir, $url, $controllerNamespace);
 $plugin = new Plugin($configuration, new WordpressCreator());
 
 $plugin->menu()->registerAdminMenuItem('WP Post Subscription', 'AdminPageController@optionsPage');
+$plugin->ajax()->registerEndpoint('subscriber', 'GET', 'AdminAjaxController@get');
 
 //$plugin = new Plugin($url, $dir, $GLOBALS['wpdb']);
 //

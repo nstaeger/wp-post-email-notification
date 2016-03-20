@@ -5,32 +5,18 @@ namespace Nstaeger\Framework;
 class Configuration
 {
     /**
-     * @var string
+     * @var array
      */
-    private $directory;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var string
-     */
-    private $controllerNamespace;
+    private $config;
 
     /**
      * Create a new configuration
      *
-     * @param string $directory           The main directory of the plugin
-     * @param string $url                 The main url of the plugin e.g. for assets
-     * @param string $controllerNamespace The namespace in which to look for controllers
+     * @param array $config
      */
-    public function __construct($directory, $url, $controllerNamespace)
+    public function __construct($config)
     {
-        $this->directory = $directory;
-        $this->url = $url;
-        $this->controllerNamespace = $controllerNamespace;
+        $this->config = $config;
     }
 
     /**
@@ -38,7 +24,7 @@ class Configuration
      */
     public function getControllerNamespace()
     {
-        return $this->controllerNamespace;
+        return $this->config['controller_namespace'];
     }
 
     /**
@@ -48,7 +34,15 @@ class Configuration
      */
     public function getDirectory()
     {
-        return $this->directory;
+        return $this->config['plugin_dir'];
+    }
+
+    /**
+     * Get the rest prefix url/string
+     */
+    public function getRestPrefix()
+    {
+        return $this->config['rest_prefix'];
     }
 
     /**
@@ -58,7 +52,7 @@ class Configuration
      */
     public function getUrl()
     {
-        return $this->url;
+        return $this->config['plugin_url'];
     }
 
     /**

@@ -5,7 +5,7 @@ module.exports = {
     el: '#wp-ps-options',
 
     data: {
-        url:           ajaxurl + "?action=ps_ajax",
+        url:           ajaxurl + '?action=wpps_v1_',
         subscribers:   null,
         newSubscriber: {
             email: ""
@@ -17,7 +17,7 @@ module.exports = {
             action: 'get_subscribers'
         };
 
-        this.$http.post(this.url, data).then(function (response) {
+        this.$http.post(this.url + 'subscriber_get', data).then(function (response) {
             this.$set('subscribers', response.data);
         });
     },

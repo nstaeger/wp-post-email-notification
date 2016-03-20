@@ -12,8 +12,6 @@ use Nstaeger\WpPostSubscription\View\ViewRenderer;
 
 class Plugin extends BasePlugin
 {
-    private static $self;
-
     private $url;
     private $directory;
     private $database;
@@ -29,15 +27,6 @@ class Plugin extends BasePlugin
 //
 //        $this->view = new ViewRenderer($this->directory);
 //    }
-
-    public static function self()
-    {
-        if (self::$self == null) {
-            throw new \UnexpectedValueException("Trying to access Plugin::self(), but Plugin was not initialized.");
-        }
-
-        return self::$self;
-    }
 
     public function activate()
     {

@@ -5,6 +5,7 @@ namespace Nstaeger\Framework;
 use Illuminate\Container\Container;
 use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
+use Nstaeger\Framework\Broker\RestBroker;
 use Nstaeger\Framework\Creator\Creator;
 use Nstaeger\Framework\Templating\TemplateRenderer;
 
@@ -16,6 +17,11 @@ class Plugin extends Container
 
         $this->instance(Configuration::class, $configuration);
         $creator->build($this);
+    }
+
+    public function ajax()
+    {
+        return $this->make(RestBroker::class);
     }
 
     /**
