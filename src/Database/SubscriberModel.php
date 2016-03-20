@@ -2,11 +2,16 @@
 
 namespace Nstaeger\WpPostSubscription\Database;
 
+use Nstaeger\Framework\Broker\DatabaseBroker;
+
 class SubscriberModel
 {
+    /**
+     * @var DatabaseBroker
+     */
     private $database;
 
-    public function __construct(Database $database)
+    public function __construct(DatabaseBroker $database)
     {
         $this->database = $database;
     }

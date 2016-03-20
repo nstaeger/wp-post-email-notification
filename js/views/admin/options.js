@@ -13,11 +13,7 @@ module.exports = {
     },
 
     ready: function () {
-        var data = {
-            action: 'get_subscribers'
-        };
-
-        this.$http.post(this.url + 'subscriber_get', data).then(function (response) {
+        this.$http.post(this.url + 'subscriber_get').then(function (response) {
             this.$set('subscribers', response.data);
         });
     },
@@ -25,12 +21,7 @@ module.exports = {
     methods: {
 
         addNewSubscriber: function () {
-            var data = {
-                action: 'add_subscriber',
-                data:   this.newSubscriber
-            };
-
-            this.$http.post(this.url, data).then(function (response) {
+            this.$http.post(this.url + 'subscriber_post', this.newSubscriber).then(function (response) {
                 this.$set('subscribers', response.data);
                 this.$set('newSubscriber.email', "");
             });

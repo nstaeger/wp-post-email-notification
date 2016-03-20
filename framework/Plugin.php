@@ -7,7 +7,9 @@ use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
 use Nstaeger\Framework\Broker\RestBroker;
 use Nstaeger\Framework\Creator\Creator;
+use Nstaeger\Framework\Http\JsonRequest;
 use Nstaeger\Framework\Templating\TemplateRenderer;
+use Symfony\Component\HttpFoundation\Request;
 
 class Plugin extends Container
 {
@@ -17,6 +19,10 @@ class Plugin extends Container
 
         $this->instance(Configuration::class, $configuration);
         $creator->build($this);
+
+        $this->bind([Request::class], function($app) {
+            return Request::createFromGlobals();
+        });
     }
 
     public function ajax()
