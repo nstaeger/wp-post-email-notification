@@ -2,21 +2,20 @@
 
 namespace Nstaeger\Framework\Creator;
 
+use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Broker\DatabaseBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
+use Nstaeger\Framework\Broker\Wordpress\WordpressAssetBroker;
 use Nstaeger\Framework\Broker\Wordpress\WordpressDatabaseBroker;
 use Nstaeger\Framework\Broker\Wordpress\WordpressMenuBroker;
-use Nstaeger\Framework\Http\Kernel;
+use Nstaeger\Framework\Plugin;
 
 class WordpressCreator implements Creator
 {
-    public function getDatabaseBroker()
+    public function build(Plugin $plugin)
     {
-        return new WordpressDatabaseBroker();
-    }
-
-    public function getMenuBroker(Kernel $kernel)
-    {
-        return new WordpressMenuBroker($kernel);
+        $plugin->bind(AssetBroker::class, WordpressAssetBroker::class);
+        $plugin->bind(DatabaseBroker::class, WordpressDatabaseBroker::class);
+        $plugin->bind(MenuBroker::class, WordpressMenuBroker::class);
     }
 }

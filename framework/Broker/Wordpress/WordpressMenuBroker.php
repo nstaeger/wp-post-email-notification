@@ -63,10 +63,8 @@ class WordpressMenuBroker implements MenuBroker
      */
     private function handlePageCall($slug)
     {
-        $controller = $this->menuItems[$slug]['action'];
-        $request = Request::createFromGlobals();
-
-        $response = $this->kernel->handleRequest($request, $controller);
+        $action = $this->menuItems[$slug]['action'];
+        $response = $this->kernel->handleRequest($action);
 
         $response->sendContent();
     }

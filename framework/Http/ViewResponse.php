@@ -9,17 +9,14 @@ class ViewResponse extends Response
 {
     public function withTemplate($template, $parameters = [])
     {
-        $this->content = Plugin::instance()->templateRenderer()->render($template, $parameters);
+        $this->content = Plugin::getInstance()->renderer()->render($template, $parameters);
 
         return $this;
     }
 
     public function withAsset($asset)
     {
-        // TODO use asset broker!
-
-        $path = Plugin::instance()->configuration()->getUrl() . $asset;
-        wp_enqueue_script($asset, $path);
+        Plugin::getInstance()->asset()->addAsset($asset);
 
         return $this;
     }

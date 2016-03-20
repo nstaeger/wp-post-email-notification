@@ -2,20 +2,14 @@
 
 namespace Nstaeger\Framework\Creator;
 
-use Nstaeger\Framework\Broker\DatabaseBroker;
-use Nstaeger\Framework\Broker\MenuBroker;
-use Nstaeger\Framework\Http\Kernel;
+use Nstaeger\Framework\Plugin;
 
 interface Creator
 {
     /**
-     * @return DatabaseBroker
+     * Bind the concrete brokers for the system to the plugin.
+     *
+     * @param Plugin $plugin
      */
-    public function getDatabaseBroker();
-
-    /**
-     * @param Kernel $kernel
-     * @return MenuBroker
-     */
-    public function getMenuBroker(Kernel $kernel);
+    public function build(Plugin $plugin);
 }

@@ -3,7 +3,9 @@
 namespace Nstaeger\Framework\Http;
 
 use InvalidArgumentException;
+use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Controller;
+use Nstaeger\Framework\Plugin;
 
 class ActionResolver
 {
@@ -15,11 +17,11 @@ class ActionResolver
     private $namespace;
 
     /**
-     * @param string $namespace The namespace in which to look for the controller.
+     * @param Configuration $configuration
      */
-    public function __construct($namespace)
+    public function __construct(Configuration $configuration)
     {
-        $this->namespace = $namespace;
+        $this->namespace = $configuration->getControllerNamespace();
     }
 
     /**
@@ -59,6 +61,11 @@ class ActionResolver
         throw new InvalidArgumentException(sprintf('Action "%s" cannot be resolved.', $action));
     }
 
+    public function execute($callable)
+    {
+        return Plugin::getInstance()->call($callable);
+    }
+
     /**
      * Returns an instantiated controller.
      *
@@ -68,7 +75,7 @@ class ActionResolver
      */
     protected function instantiateController($class)
     {
-        $instance = new $class();
+        $instance = Plugin::getInstance()->make($class);
 
         if (!$instance instanceof Controller) {
             throw new InvalidArgumentException(

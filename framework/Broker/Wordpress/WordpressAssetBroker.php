@@ -1,13 +1,25 @@
 <?php
 
-namespace Nstaeger\framework\Broker\Wordpress;
+namespace Nstaeger\Framework\Broker\Wordpress;
 
-use Nstaeger\framework\Broker\AssetBroker;
+use Nstaeger\Framework\Broker\AssetBroker;
+use Nstaeger\Framework\Configuration;
 
 class WordpressAssetBroker implements AssetBroker
 {
-    function addAsset()
+    /**
+     * @var string
+     */
+    private $url;
+
+    public function __construct(Configuration $configuration)
     {
-        // TODO: Implement addAsset() method.
+        $this->url = $configuration->getUrl();
+    }
+
+    public function addAsset($asset)
+    {
+        $path = $this->url . $asset;
+        wp_enqueue_script($asset, $path);
     }
 }

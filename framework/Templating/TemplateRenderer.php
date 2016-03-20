@@ -3,6 +3,7 @@
 namespace Nstaeger\Framework\Templating;
 
 use InvalidArgumentException;
+use Nstaeger\Framework\Configuration;
 use RuntimeException;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 use Symfony\Component\Templating\PhpEngine;
@@ -24,18 +25,21 @@ class TemplateRenderer
     /**
      * TemplateRenderer constructor.
      *
-     * @param string $directory Main directory for views with no trailing slash.
+     * @param Configuration $configuration
      */
-    public function __construct($directory)
+    public function __construct(Configuration $configuration)
     {
-        $this->templateDirectory = rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '%name%';
+        $this->templateDirectory = rtrim(
+                $configuration->getViewDirectory(),
+                DIRECTORY_SEPARATOR
+            ) . DIRECTORY_SEPARATOR . '%name%';
     }
 
     /**
      * Print a template.
      *
-     * @param string|TemplateReferenceInterface $name       A template name or a TemplateReferenceInterface instance
-     * @param array                             $parameters An array of parameters to pass to the template
+     * @param       $template
+     * @param array $parameters An array of parameters to pass to the template
      */
     public function renderAndPrint($template, $parameters = array())
     {

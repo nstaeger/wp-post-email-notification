@@ -1,8 +1,11 @@
 <?php
 
-namespace Nstaeger\framework\Broker;
+namespace Nstaeger\Framework\Broker;
 
 interface AssetBroker
 {
-    function addAsset();
+    /**
+     * @param string $asset
+     */
+    function addAsset($asset);
 }

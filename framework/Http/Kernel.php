@@ -5,6 +5,7 @@ namespace Nstaeger\Framework\Http;
 use InvalidArgumentException;
 use Nstaeger\Framework\Http\Exceptions\HttpInternalErrorException;
 use Nstaeger\Framework\Http\Exceptions\HttpNotFoundException;
+use Nstaeger\Framework\Plugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,15 +27,14 @@ class Kernel
     /**
      * Handle a request and transform it into a response.
      *
-     * @param Request $request
      * @param mixed   $action
      * @return Response
      */
-    public function handleRequest(Request $request, $action)
+    public function handleRequest($action)
     {
         try {
             $callable = $this->getCallable($action);
-            $response = $this->execute($callable, $request);
+            $response = $this->execute($callable);
 
             if (!$response instanceof Response) {
                 throw new HttpInternalErrorException('Action did not return a proper Reponse.');
@@ -52,12 +52,11 @@ class Kernel
      * Execute the callable and handle the request.
      *
      * @param callable $callable
-     * @param Request  $request
      * @return Response
      */
-    private function execute($callable, $request)
+    private function execute($callable)
     {
-        return call_user_func_array($callable, [$request]);
+        return $this->resolver->execute($callable);
     }
 
     /**
