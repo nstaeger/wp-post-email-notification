@@ -4,11 +4,11 @@ namespace Nstaeger\WpPostSubscription\Controller;
 
 use Nstaeger\Framework\Controller;
 use Nstaeger\Framework\Http\Exceptions\HttpBadRequestException;
-use Nstaeger\WpPostSubscription\Database\SubscriberModel;
+use Nstaeger\WpPostSubscription\Model\SubscriberModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdminAjaxController extends Controller
+class AdminSubscriberController extends Controller
 {
     public function delete(Request $request, SubscriberModel $subscriberModel)
     {

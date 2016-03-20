@@ -1,6 +1,6 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription\Database;
+namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
 
