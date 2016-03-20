@@ -26,6 +26,7 @@ $plugin = new Plugin($configuration, new WordpressCreator());
 $plugin->menu()->registerAdminMenuItem('WP Post Subscription', 'AdminPageController@optionsPage');
 $plugin->ajax()->registerEndpoint('subscriber', 'GET', 'AdminAjaxController@get');
 $plugin->ajax()->registerEndpoint('subscriber', 'POST', 'AdminAjaxController@post');
+$plugin->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminAjaxController@delete');
 
 //$plugin = new Plugin($url, $dir, $GLOBALS['wpdb']);
 //

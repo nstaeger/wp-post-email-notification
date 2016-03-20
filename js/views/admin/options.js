@@ -33,13 +33,10 @@ module.exports = {
             }
 
             var data = {
-                action: 'delete_subscriber',
-                data:   {
-                    id: id
-                }
+                id: id
             };
 
-            this.$http.post(this.url, data).then(function (response) {
+            this.$http.post(this.url + 'subscriber_delete', data).then(function (response) {
                 this.$set('subscribers', response.data);
             });
         }
