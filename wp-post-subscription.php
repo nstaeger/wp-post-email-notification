@@ -14,12 +14,15 @@ use Nstaeger\WpPostSubscription\Plugin;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$configuration = new Configuration([
-    'plugin_dir' => __DIR__,
-    'plugin_url' => plugin_dir_url(__FILE__),
-    'controller_namespace' => "Nstaeger\\WpPostSubscription\\Controller",
-    'rest_prefix' => 'wpps_v1'
-]);
+$configuration = new Configuration(
+    [
+        'plugin_dir'           => __DIR__,
+        'plugin_main_file'     => __FILE__,
+        'plugin_url'           => plugin_dir_url(__FILE__),
+        'controller_namespace' => "Nstaeger\\WpPostSubscription\\Controller",
+        'rest_prefix'          => 'wpps_v1'
+    ]
+);
 
 $plugin = new Plugin($configuration, new WordpressCreator());
 

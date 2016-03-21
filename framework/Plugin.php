@@ -4,9 +4,11 @@ namespace Nstaeger\Framework;
 
 use Illuminate\Container\Container;
 use Nstaeger\Framework\Broker\AssetBroker;
+use Nstaeger\Framework\Broker\EventBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
 use Nstaeger\Framework\Broker\RestBroker;
 use Nstaeger\Framework\Creator\Creator;
+use Nstaeger\Framework\Event\EventDispatcher;
 use Nstaeger\Framework\Templating\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,11 +22,22 @@ class Plugin extends Container
         self::setInstance($this);
 
         $this->instance(Configuration::class, $configuration);
+        $this->singleton(EventDispatcher::class, EventDispatcher::class);
         $creator->build($this);
 
-        $this->bind([Request::class], function($app) {
-            return Request::createFromGlobals();
-        });
+        // register regular events from system
+        $this->make(EventBroker::class)->fireAll($this->events());
+
+        // regular request
+        $this->singleton(
+            Request::class,
+            function () {
+                return Request::createFromGlobals();
+            }
+        );
+
+        $this->events()->on('activate', array($this, 'activate'));
+        $this->events()->on('deactivate', array($this, 'deactivate'));
     }
 
     /**
@@ -44,6 +57,14 @@ class Plugin extends Container
     }
 
     /**
+     * @return EventDispatcher
+     */
+    public function events()
+    {
+        return $this->make(EventDispatcher::class);
+    }
+
+    /**
      * @return MenuBroker
      */
     public function menu()
@@ -57,5 +78,21 @@ class Plugin extends Container
     public function renderer()
     {
         return $this->make(TemplateRenderer::class);
+    }
+
+    /**
+     * Is being called automatically, when the plugin is being activated
+     */
+    protected function activate()
+    {
+        // noop
+    }
+
+    /**
+     * is being called automatically, when the plugin is being deactivated
+     */
+    protected function deactivate()
+    {
+        // noop
     }
 }

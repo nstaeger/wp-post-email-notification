@@ -28,6 +28,14 @@ class Configuration
     }
 
     /**
+     * @return string
+     */
+    public function getMainPluginFile()
+    {
+        return $this->config['plugin_main_file'];
+    }
+
+    /**
      * Get the main directory of the plugin.
      *
      * @return string
