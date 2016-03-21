@@ -6,6 +6,7 @@ use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Creator\Creator;
 use Nstaeger\Framework\Plugin as BasePlugin;
+use Nstaeger\WpPostSubscription\Model\SubscriberModel;
 use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
 class Plugin extends BasePlugin
@@ -29,8 +30,12 @@ class Plugin extends BasePlugin
 
     public function activate()
     {
-//        $subscriberModel = new SubscriberModel();
-//        $subscriberModel->createTable();
+        $this->subscriber()->createTable();
+    }
+
+    public function deactivate()
+    {
+        $this->subscriber()->dropTable();
     }
 
     public function registerWidget($class)
@@ -45,9 +50,11 @@ class Plugin extends BasePlugin
         );
     }
 
-    public function uninstall()
+    /**
+     * @return SubscriberModel
+     */
+    public function subscriber()
     {
-//        $subscriberModel = new SubscriberModel($this->database);
-//        $subscriberModel->dropTable();
+        return $this->make(SubscriberModel::class);
     }
 }
