@@ -2,6 +2,7 @@
 
 namespace Nstaeger\Framework\Menu;
 
+use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Support\Str;
 
 class MenuItem {
@@ -11,7 +12,7 @@ class MenuItem {
     private $action;
 
     /**
-     * @var array
+     * @var AssetItem[]
      */
     private $assets;
 
@@ -49,12 +50,12 @@ class MenuItem {
     /**
      * Attach an asset to be loaded on the execution of this menu item
      *
-     * @param $asset
+     * @param string $asset
      * @return $this
      */
     public function withAsset($asset)
     {
-        $this->assets[] = $asset;
+        $this->assets[] = (new AssetItem($asset))->onlyOn($this->getSlug());
         return $this;
     }
 
@@ -79,7 +80,7 @@ class MenuItem {
     }
 
     /**
-     * @return array
+     * @return AssetItem[]
      */
     public function getAssets()
     {

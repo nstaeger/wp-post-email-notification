@@ -2,20 +2,22 @@
 
 namespace Nstaeger\Framework\Broker;
 
+use Nstaeger\Framework\Asset\AssetItem;
+
 interface AssetBroker
 {
     /**
-     * @param string $asset
+     * @param AssetItem $asset
      */
-    function addAdminAsset($asset);
+    function addAdminAsset(AssetItem $asset);
 
     /**
-     * @param string[] $assets
+     * @param AssetItem[] $assets
      */
     function addAdminAssets($assets);
 
     /**
-     * @param string $asset
+     * @param AssetItem $asset
      */
-    function addAsset($asset);
+    function addAsset(AssetItem $asset);
 }

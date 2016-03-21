@@ -2,6 +2,7 @@
 
 namespace Nstaeger\WpPostSubscription;
 
+use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Plugin as BasePlugin;
 
 class Plugin extends BasePlugin
@@ -14,8 +15,9 @@ class Plugin extends BasePlugin
 
     public function registerWidget($class)
     {
+        $this->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
+
         add_action('widgets_init', function () use ($class) {
-            $this->asset()->addAsset('js/bundle/frontend-widget.js');
             register_widget($class);
         });
     }

@@ -16,9 +16,9 @@ class WordpressCreator implements Creator
 {
     public function build(Plugin $plugin)
     {
-        $plugin->bind(AssetBroker::class, WordpressAssetBroker::class);
-        $plugin->bind(DatabaseBroker::class, WordpressDatabaseBroker::class);
-        $plugin->bind(MenuBroker::class, WordpressMenuBroker::class);
-        $plugin->bind(RestBroker::class, WordpressRestBroker::class);
+        $plugin->singleton(AssetBroker::class, WordpressAssetBroker::class);
+        $plugin->singleton(DatabaseBroker::class, WordpressDatabaseBroker::class);
+        $plugin->singleton(MenuBroker::class, WordpressMenuBroker::class);
+        $plugin->singleton(RestBroker::class, WordpressRestBroker::class);
     }
 }

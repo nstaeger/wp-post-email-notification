@@ -2,48 +2,85 @@
 
 namespace Nstaeger\Framework\Broker\Wordpress;
 
+use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Configuration;
 
-/**
- * TODO register only one handler for each type, not for each asset.
- */
 class WordpressAssetBroker implements AssetBroker
 {
     /**
+     * @var AssetItem[]
+     */
+    private $adminAssets;
+
+    /**
+     * @var AssetItem[]
+     */
+    private $assets;
+
+    /**
      * @var string
      */
-    private $url;
+    private $urlPrefix;
 
     public function __construct(Configuration $configuration)
     {
-        $this->url = $configuration->getUrl();
+        $this->adminAssets = array();
+        $this->assets = array();
+        $this->urlPrefix = $configuration->getUrl();
+
+        add_action(
+            'admin_enqueue_scripts',
+            function ($hook) {
+                $this->enqueAdminAssets($hook);
+            }
+        );
+
+        add_action(
+            'wp_enqueue_scripts',
+            function () {
+                $this->enqueAssets();
+            }
+        );
     }
 
-    public function addAdminAsset($asset)
+    public function addAdminAsset(AssetItem $asset)
     {
-        add_action('admin_enqueue_scripts', function($hook) use ($asset) {
-            // TODO allow usage of hook (if (strpos($hook, 'wp-ps-options') !== false) {...)
-            $path = $this->url . $asset;
-            wp_enqueue_script($asset, $path);
-        });
+        $this->adminAssets[] = $asset;
     }
 
     function addAdminAssets($assets)
     {
-        foreach ($assets as $asset)
-        {
+        foreach ($assets as $asset) {
             $this->addAdminAsset($asset);
         }
     }
 
-    public function addAsset($asset)
+    public function addAsset(AssetItem $asset)
     {
-        add_action('wp_enqueue_scripts', function() use ($asset) {
-            $path = $this->url . $asset;
-            wp_enqueue_script($asset, $path);
+        $this->assets[] = $asset;
+    }
+
+    private function enqueAdminAssets($hook)
+    {
+        foreach ($this->adminAssets as $asset) {
+            if (!empty($asset->getHook()) && strpos($hook, $asset->getHook()) === false) {
+                continue;
+            }
+
+            $path = $this->urlPrefix . $asset->getUrl();
+            wp_enqueue_script($asset->getName(), $path);
+        }
+    }
+
+    private function enqueAssets()
+    {
+        foreach ($this->assets as $asset) {
+            $path = $this->urlPrefix . $asset->getUrl();
+            wp_enqueue_script($asset->getName(), $path);
+
             // TODO solve in another way
-            wp_localize_script($asset, 'ajaxurl', admin_url('admin-ajax.php'));
-        });
+            wp_localize_script($asset->getName(), 'ajaxurl', admin_url('admin-ajax.php'));
+        }
     }
 }
