@@ -6,7 +6,6 @@ use Nstaeger\Framework\Broker\DatabaseBroker;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 
-// TODO use prepared statment
 class SubscriberModel
 {
     /**

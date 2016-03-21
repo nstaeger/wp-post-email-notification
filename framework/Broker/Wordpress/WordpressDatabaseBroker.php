@@ -22,9 +22,19 @@ class WordpressDatabaseBroker implements DatabaseBroker
         return $this->databaseConnection->delete($this->parsePrefix($table), $where);
     }
 
+    public function executePreparedQuery($query, $args)
+    {
+        $parsed = $this->parsePrefix($query);
+        $prepared = $this->databaseConnection->prepare($parsed, $args);
+
+        return $this->databaseConnection->query($prepared);
+    }
+
     public function executeQuery($query)
     {
-        return $this->databaseConnection->query($this->parsePrefix($query));
+        $parsed = $this->parsePrefix($query);
+
+        return $this->databaseConnection->query($parsed);
     }
 
     public function fetchAll($query)

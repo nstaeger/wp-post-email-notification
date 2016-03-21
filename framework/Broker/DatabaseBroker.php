@@ -16,6 +16,19 @@ interface DatabaseBroker
     /**
      * Perform a MySQL database query.
      *
+     * @param string      $query    Query statement with sprintf()-like placeholders
+     * @param array|mixed $args     The array of variables to substitute into the query's placeholders if being called like
+     *                              {@link http://php.net/vsprintf vsprintf()}, or the first variable to substitute into the query's placeholders if
+     *                              being called like {@link http://php.net/sprintf sprintf()}.
+     * @param mixed       $args,... further variables to substitute into the query's placeholders if being called like
+     *                              {@link http://php.net/sprintf sprintf()}.
+     * @return int|false Number of rows affected/selected or false on error
+     */
+    function executePreparedQuery($query, $args);
+
+    /**
+     * Perform a MySQL database query.
+     *
      * @param string $query Database query
      * @return int|false Number of rows affected/selected or false on error
      */
