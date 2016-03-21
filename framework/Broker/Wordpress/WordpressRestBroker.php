@@ -27,14 +27,28 @@ class WordpressRestBroker implements RestBroker
         $this->prefix = $config->getRestPrefix();
     }
 
-    public function registerEndpoint($route, $methods, $action)
+    public function registerEndpoint($route, $methods, $action, $nopriv = false)
     {
-        $function = 'wp_ajax_' . $this->prefix . '_' . $route . '_' . strtolower($methods);
+        // TODO cleanup when working on access control
+
+        $wordpress_pre = 'wp_ajax_';
+        $function = $wordpress_pre . $this->prefix . '_' . $route . '_' . strtolower($methods);
 
         add_action($function, function () use ($action) {
             $response = $this->kernel->handleRequest($action);
             $response->sendContent();
             die();
         });
+
+        if ($nopriv)
+        {
+            $function = $wordpress_pre . 'nopriv_' . $this->prefix . '_' . $route . '_' . strtolower($methods);
+
+            add_action($function, function () use ($action) {
+                $response = $this->kernel->handleRequest($action);
+                $response->sendContent();
+                die();
+            });
+        }
     }
 }

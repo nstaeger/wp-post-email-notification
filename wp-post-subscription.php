@@ -11,7 +11,6 @@
 use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Creator\WordpressCreator;
 use Nstaeger\WpPostSubscription\Plugin;
-use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -23,18 +22,6 @@ $configuration = new Configuration([
 ]);
 
 $plugin = new Plugin($configuration, new WordpressCreator());
-
-$plugin->menu()->registerAdminMenuItem('WP Post Subscription')
-               ->withAction('AdminPageController@optionsPage')
-               ->withAsset('js/bundle/admin-options.js');
-
-// TODO access control!
-$plugin->ajax()->registerEndpoint('subscriber', 'GET', 'AdminSubscriberController@get');
-$plugin->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
-$plugin->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
-$plugin->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post');
-
-$plugin->registerWidget(SubscriptionWidget::class);
 
 //$plugin = new Plugin($url, $dir, $GLOBALS['wpdb']);
 //

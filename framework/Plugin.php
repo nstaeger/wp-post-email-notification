@@ -7,10 +7,12 @@ use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
 use Nstaeger\Framework\Broker\RestBroker;
 use Nstaeger\Framework\Creator\Creator;
-use Nstaeger\Framework\Http\JsonRequest;
 use Nstaeger\Framework\Templating\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * TODO cleanup dependencies
+ */
 class Plugin extends Container
 {
     public function __construct(Configuration $configuration, Creator $creator)
