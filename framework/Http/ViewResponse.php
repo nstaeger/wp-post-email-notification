@@ -16,6 +16,9 @@ class ViewResponse extends Response
         return $this;
     }
 
+    /**
+     * TODO may be removed
+     */
     public function withAdminAsset($asset)
     {
         Plugin::getInstance()->asset()->addAdminAsset($asset);
@@ -23,6 +26,9 @@ class ViewResponse extends Response
         return $this;
     }
 
+    /**
+     * TODO may be removed
+     */
     public function withAsset($asset)
     {
         Plugin::getInstance()->asset()->addAsset($asset);

@@ -2,40 +2,50 @@
 
 namespace Nstaeger\Framework\Broker\Wordpress;
 
+use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Broker\MenuBroker;
 use Nstaeger\Framework\Http\Kernel;
-use Nstaeger\Framework\Support\Str;
-use Symfony\Component\HttpFoundation\Request;
+use Nstaeger\Framework\Menu\MenuItem;
 
 class WordpressMenuBroker implements MenuBroker
 {
+    /**
+     * @var AssetBroker
+     */
+    private $assetBroker;
+
     /**
      * @var Kernel
      */
     private $kernel;
 
     /**
-     * @var array
+     * @var MenuItem[]
      */
     private $menuItems;
 
-    public function __construct(Kernel $kernel)
+    public function __construct(AssetBroker $assetBroker, Kernel $kernel)
     {
+        $this->assetBroker = $assetBroker;
         $this->kernel = $kernel;
         $this->menuItems = array();
 
-        add_action('admin_menu', function () {
-            $this->registerItems();
-        });
+        add_action(
+            'admin_menu',
+            function () {
+                $this->registerItems();
+            }
+        );
     }
 
-    public function registerAdminMenuItem($title, $action, $capability = 'manage_options')
+    public function registerAdminMenuItem($title)
     {
-        $this->menuItems[Str::snake($title)] = [
-            'title'      => $title,
-            'action'     => $action,
-            'capability' => $capability
-        ];
+        $menuItemBuilder = new MenuItem($title);
+        $menuItemBuilder->withCapability('manage_options');
+
+        $this->menuItems[] = $menuItemBuilder;
+
+        return $menuItemBuilder;
     }
 
     /**
@@ -43,14 +53,19 @@ class WordpressMenuBroker implements MenuBroker
      */
     private function registerItems()
     {
-        foreach ($this->menuItems as $slug => $menuItem) {
+        foreach ($this->menuItems as $menuItem) {
+            if (!empty($menuItem->getAssets()))
+            {
+                $this->assetBroker->addAdminAssets($menuItem->getAssets());
+            }
+
             add_menu_page(
-                $menuItem['title'],
-                $menuItem['title'],
-                $menuItem['capability'],
-                $slug,
-                function () use ($slug) {
-                    $this->handlePageCall($slug);
+                $menuItem->getTitle(),
+                $menuItem->getTitle(),
+                $menuItem->getCapability(),
+                $menuItem->getSlug(),
+                function () use ($menuItem) {
+                    $this->handlePageCall($menuItem);
                 }
             );
         }
@@ -59,13 +74,11 @@ class WordpressMenuBroker implements MenuBroker
     /**
      * Handle a page call, executed when the page is being accessed.
      *
-     * @param string $slug the slug of the menu item
+     * @param MenuItem $menuItem the menu item
      */
-    private function handlePageCall($slug)
+    private function handlePageCall(MenuItem $menuItem)
     {
-        $action = $this->menuItems[$slug]['action'];
-        $response = $this->kernel->handleRequest($action);
-
+        $response = $this->kernel->handleRequest($menuItem->getAction());
         $response->sendContent();
     }
 }

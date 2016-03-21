@@ -8,6 +8,6 @@ class AdminPageController extends Controller
 {
     public function optionsPage()
     {
-        return $this->view('admin/options')->withAdminAsset('js/bundle/admin-options.js');
+        return $this->view('admin/options');
     }
 }

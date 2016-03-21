@@ -5,6 +5,9 @@ namespace Nstaeger\Framework\Broker\Wordpress;
 use Nstaeger\Framework\Broker\AssetBroker;
 use Nstaeger\Framework\Configuration;
 
+/**
+ * TODO register only one handler for each type, not for each asset.
+ */
 class WordpressAssetBroker implements AssetBroker
 {
     /**
@@ -24,6 +27,14 @@ class WordpressAssetBroker implements AssetBroker
             $path = $this->url . $asset;
             wp_enqueue_script($asset, $path);
         });
+    }
+
+    function addAdminAssets($assets)
+    {
+        foreach ($assets as $asset)
+        {
+            $this->addAdminAsset($asset);
+        }
     }
 
     public function addAsset($asset)

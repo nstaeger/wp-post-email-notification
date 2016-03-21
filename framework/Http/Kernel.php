@@ -27,7 +27,7 @@ class Kernel
     /**
      * Handle a request and transform it into a response.
      *
-     * @param mixed   $action
+     * @param mixed $action
      * @return Response
      */
     public function handleRequest($action)
@@ -40,7 +40,7 @@ class Kernel
                 throw new HttpInternalErrorException('Action did not return a proper Reponse.');
             }
 
-            return$response;
+            return $response;
         } catch (HttpNotFoundException $e) {
             return new Response("HttpNotFoundException: " . $e->getMessage(), $e->getStatusCode());
         } catch (HttpInternalErrorException $e) {
@@ -70,7 +70,9 @@ class Kernel
         try {
             return $this->resolver->resolveAction($action);
         } catch (InvalidArgumentException $e) {
-            throw new HttpNotFoundException(sprintf('Unable to resolve action "%s": %s', $action, $e->getMessage()), $e);
+            throw new HttpNotFoundException(
+                sprintf('Unable to resolve action "%s": %s', $action, $e->getMessage()), $e
+            );
         }
     }
 }

@@ -24,7 +24,9 @@ $configuration = new Configuration([
 
 $plugin = new Plugin($configuration, new WordpressCreator());
 
-$plugin->menu()->registerAdminMenuItem('WP Post Subscription', 'AdminPageController@optionsPage');
+$plugin->menu()->registerAdminMenuItem('WP Post Subscription')
+               ->withAction('AdminPageController@optionsPage')
+               ->withAsset('js/bundle/admin-options.js');
 
 $plugin->ajax()->registerEndpoint('subscriber', 'GET', 'AdminSubscriberController@get');
 $plugin->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
