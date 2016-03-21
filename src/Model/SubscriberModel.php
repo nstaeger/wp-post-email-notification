@@ -3,7 +3,10 @@
 namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
+use Psr\Log\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Request;
 
+// TODO use prepared statment
 class SubscriberModel
 {
     /**
@@ -16,17 +19,30 @@ class SubscriberModel
         $this->database = $database;
     }
 
-    public function add($email, $ip)
+    /**
+     * @param Request $request
+     * @throws InvalidArgumentException
+     */
+    public function add(Request $request)
     {
-        $data = [
-            'email'   => $email,
-            'ip'      => $ip,
-            'created' => current_time('mysql')
-        ];
+        $subscriber = json_decode($request->getContent());
 
-        if ($this->database->insert("@@ps_subscribers", $data) === false) {
-            throw new \RuntimeException('Unable to add subscriber to the database (Post Subscription Plugin)');
+        $email = isset($subscriber->email) ? sanitize_email($subscriber->email) : null;
+        $ip = isset($subscriber->ip) && !empty($subscriber->ip)
+            ? $subscriber->ip
+            : $request->getClientIp();
+
+        if (empty($email) || !is_email($email)) {
+            throw new InvalidArgumentException("Email not valid.");
         }
+
+        if (!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false
+            && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false
+        ) {
+            throw new InvalidArgumentException("IP not valid.");
+        }
+
+        $this->addPlain($email, $ip);
     }
 
     public function createTable()
@@ -69,5 +85,18 @@ class SubscriberModel
         $query = "SELECT * FROM @@ps_subscribers";
 
         return $this->database->fetchAll($query);
+    }
+
+    private function addPlain($email, $ip)
+    {
+        $data = [
+            'email'   => $email,
+            'ip'      => $ip,
+            'created' => current_time('mysql')
+        ];
+
+        if ($this->database->insert("@@ps_subscribers", $data) === false) {
+            throw new \RuntimeException('Unable to add subscriber to the database (Post Subscription Plugin)');
+        }
     }
 }

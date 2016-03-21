@@ -25,6 +25,9 @@ class Plugin extends Container
         });
     }
 
+    /**
+     * @return RestBroker
+     */
     public function ajax()
     {
         return $this->make(RestBroker::class);

@@ -6,6 +6,9 @@ use Nstaeger\Framework\Broker\RestBroker;
 use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Http\Kernel;
 
+/**
+ * TODO what about access control?
+ */
 class WordpressRestBroker implements RestBroker
 {
     /**

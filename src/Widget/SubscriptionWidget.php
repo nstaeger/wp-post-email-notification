@@ -14,8 +14,6 @@ class SubscriptionWidget extends \WP_Widget
 
     /**
      * Sets up the widgets name etc
-     *
-     * @param TemplateRenderer $renderer
      */
     public function __construct()
     {

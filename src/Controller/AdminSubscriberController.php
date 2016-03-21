@@ -2,6 +2,7 @@
 
 namespace Nstaeger\WpPostSubscription\Controller;
 
+use InvalidArgumentException;
 use Nstaeger\Framework\Controller;
 use Nstaeger\Framework\Http\Exceptions\HttpBadRequestException;
 use Nstaeger\WpPostSubscription\Model\SubscriberModel;
@@ -31,30 +32,12 @@ class AdminSubscriberController extends Controller
 
     public function post(Request $request, SubscriberModel $subscriberModel)
     {
-        $this->tryToAddSubscriber($request, $subscriberModel);
+        try {
+            $subscriberModel->add($request);
+        } catch (InvalidArgumentException $e) {
+            throw new HttpBadRequestException($e->getMessage());
+        }
 
         return new JsonResponse($subscriberModel->getAll());
-    }
-
-    private function tryToAddSubscriber(Request $request, SubscriberModel $subscriberModel)
-    {
-        $subscriber = json_decode($request->getContent());
-
-        $email = isset($subscriber->email) ? sanitize_email($subscriber->email) : null;
-        $ip = isset($subscriber->ip) && !empty($subscriber->ip)
-            ? $subscriber->ip
-            : $request->getClientIp();
-
-        if (empty($email) || !is_email($email)) {
-            throw new HttpBadRequestException("Email not valid.");
-        }
-
-        if (!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false
-            && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false
-        ) {
-            throw new HttpBadRequestException("IP not valid.");
-        }
-
-        $subscriberModel->add($email, $ip);
     }
 }

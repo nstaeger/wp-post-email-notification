@@ -5,7 +5,7 @@ module.exports = {
     el: '.widget_subscriptionwidget',
 
     data: {
-        url:        ajaxurl + "?action=ps_ajax",
+        url:        ajaxurl + '?action=wpps_v1_',
         success:    false,
         subscriber: {
             email: ''
@@ -15,12 +15,7 @@ module.exports = {
     methods: {
 
         subscribe: function () {
-            var data = {
-                action: 'subscribe',
-                data:   this.subscriber
-            };
-
-            this.$http.post(this.url, data).then(function (response) {
+            this.$http.post(this.url + 'subscribe_post', this.subscriber).then(function (response) {
                 this.$set('success', true);
                 this.$set('subscriber.email', "");
             });
