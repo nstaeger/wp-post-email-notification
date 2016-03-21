@@ -12,14 +12,12 @@ class Plugin extends BasePlugin
 //        $subscriberModel->createTable();
     }
 
-    public function renderWidget(array $data)
+    public function registerWidget($class)
     {
-//        $this->view->render("widget/widget", $data);
-    }
-
-    public function renderWidgetForm(array $data)
-    {
-//        $this->view->render("widget/form", $data);
+        add_action('widgets_init', function () use ($class) {
+            $this->asset()->addAsset('js/bundle/frontend-widget.js');
+            register_widget($class);
+        });
     }
 
     public function uninstall()

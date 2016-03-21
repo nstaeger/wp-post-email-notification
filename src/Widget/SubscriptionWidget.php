@@ -2,18 +2,24 @@
 
 namespace Nstaeger\WpPostSubscription\Widget;
 
+use Nstaeger\Framework\Templating\TemplateRenderer;
 use Nstaeger\WpPostSubscription\Plugin;
 
 class SubscriptionWidget extends \WP_Widget
 {
-    private $plugin;
+    /**
+     * @var TemplateRenderer
+     */
+    private $renderer;
 
     /**
      * Sets up the widgets name etc
+     *
+     * @param TemplateRenderer $renderer
      */
     public function __construct()
     {
-        $this->plugin = Plugin::self();
+        $this->renderer = Plugin::getInstance()->renderer();
 
         $widget_ops = array(
             'class_name'  => 'SubscriptionWidget',
@@ -31,7 +37,7 @@ class SubscriptionWidget extends \WP_Widget
      */
     public function widget($args, $instance)
     {
-        $this->plugin->renderWidget([
+        echo $this->renderer->render("widget/widget", [
             'before_widget' => $args['before_widget'],
             'after_widget'  => $args['after_widget'],
             'before_title'  => $args['before_title'],
@@ -48,7 +54,7 @@ class SubscriptionWidget extends \WP_Widget
      */
     public function form($instance)
     {
-        $this->plugin->renderWidgetForm([
+        echo $this->renderer->render("widget/form", [
             'title_field_id'   => $this->get_field_id('title'),
             'title_field_name' => $this->get_field_name('title'),
             'title_value'      => !empty($instance['title']) ? esc_attr($instance['title']) : '',

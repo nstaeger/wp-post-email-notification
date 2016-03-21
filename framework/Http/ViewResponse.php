@@ -7,9 +7,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ViewResponse extends Response
 {
+    // TODO inject dependencies
+
     public function withTemplate($template, $parameters = [])
     {
         $this->content = Plugin::getInstance()->renderer()->render($template, $parameters);
+
+        return $this;
+    }
+
+    public function withAdminAsset($asset)
+    {
+        Plugin::getInstance()->asset()->addAdminAsset($asset);
 
         return $this;
     }
