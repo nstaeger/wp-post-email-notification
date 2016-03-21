@@ -6,6 +6,7 @@ use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Creator\Creator;
 use Nstaeger\Framework\Plugin as BasePlugin;
+use Nstaeger\WpPostSubscription\Model\JobModel;
 use Nstaeger\WpPostSubscription\Model\SubscriberModel;
 use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
@@ -48,6 +49,14 @@ class Plugin extends BasePlugin
                 register_widget($class);
             }
         );
+    }
+
+    /**
+     * @return JobModel
+     */
+    public function jobs()
+    {
+        return $this->make(JobModel::class);
     }
 
     /**
