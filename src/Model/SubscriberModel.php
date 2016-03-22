@@ -3,6 +3,7 @@
 namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
+use Nstaeger\Framework\Support\ArgCheck;
 use Symfony\Component\HttpFoundation\Request;
 
 class SubscriberModel
@@ -21,26 +22,13 @@ class SubscriberModel
 
     /**
      * @param Request $request
-     * @throws InvalidArgumentException
      */
     public function add(Request $request)
     {
         $subscriber = json_decode($request->getContent());
 
         $email = isset($subscriber->email) ? sanitize_email($subscriber->email) : null;
-        $ip = isset($subscriber->ip) && !empty($subscriber->ip)
-            ? $subscriber->ip
-            : $request->getClientIp();
-
-        if (empty($email) || !is_email($email)) {
-            throw new InvalidArgumentException("Email not valid.");
-        }
-
-        if (!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false
-            && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false
-        ) {
-            throw new InvalidArgumentException("IP not valid.");
-        }
+        $ip = $request->getClientIp();
 
         $this->addPlain($email, $ip);
     }
@@ -62,6 +50,8 @@ class SubscriberModel
 
     public function delete($id)
     {
+        ArgCheck::isInt($id);
+
         $where = [
             'id' => $id
         ];
@@ -89,6 +79,9 @@ class SubscriberModel
 
     public function getEmails($offset, $count)
     {
+        ArgCheck::isInt($offset);
+        ArgCheck::isInt($count);
+
         $query = sprintf("SELECT email FROM %s LIMIT %d, %d", self::TABLE_NAME, $offset, $count);
 
         return $this->database->fetchAll($query);
@@ -96,6 +89,9 @@ class SubscriberModel
 
     private function addPlain($email, $ip)
     {
+        ArgCheck::isEmail($email);
+        ArgCheck::isIp($ip);
+
         $data = [
             'email' => $email,
             'ip'    => $ip
