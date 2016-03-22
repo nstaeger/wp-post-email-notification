@@ -3,12 +3,12 @@
 namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
-use Nstaeger\Framework\Support\Time;
-use Psr\Log\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 
 class SubscriberModel
 {
+    const TABLE_NAME = '@@ps_subscribers';
+
     /**
      * @var DatabaseBroker
      */
@@ -47,11 +47,11 @@ class SubscriberModel
 
     public function createTable()
     {
-        $query = "CREATE TABLE IF NOT EXISTS @@ps_subscribers (
+        $query = "CREATE TABLE IF NOT EXISTS " . self::TABLE_NAME . " (
             id int(10) NOT NULL AUTO_INCREMENT,
             email VARCHAR(255) NOT NULL,
             ip VARCHAR(255),
-            created DATETIME NOT NULL,
+            created DATETIME NOT NULL DEFAULT NOW(),
             PRIMARY KEY  id (id)
         ) DEFAULT CHARSET=utf8;";
 
@@ -66,14 +66,14 @@ class SubscriberModel
             'id' => $id
         ];
 
-        if ($this->database->delete("@@ps_subscribers", $where) === false) {
+        if ($this->database->delete(self::TABLE_NAME, $where) === false) {
             throw new \RuntimeException('Unable to delete subscriber from database (Post Subscription Plugin)');
         }
     }
 
     public function dropTable()
     {
-        $query = "DROP TABLE IF EXISTS @@ps_subscribers";
+        $query = sprintf("DROP TABLE IF EXISTS %s", self::TABLE_NAME);
 
         if ($this->database->executeQuery($query) === false) {
             throw new \RuntimeException('Unable to delete database for WP Post Subscription Plugin');
@@ -82,7 +82,14 @@ class SubscriberModel
 
     public function getAll()
     {
-        $query = "SELECT * FROM @@ps_subscribers";
+        $query = sprintf("SELECT * FROM %s", self::TABLE_NAME);
+
+        return $this->database->fetchAll($query);
+    }
+
+    public function getEmails($offset, $count)
+    {
+        $query = sprintf("SELECT email FROM %s LIMIT %d, %d", self::TABLE_NAME, $offset, $count);
 
         return $this->database->fetchAll($query);
     }
@@ -90,12 +97,11 @@ class SubscriberModel
     private function addPlain($email, $ip)
     {
         $data = [
-            'email'   => $email,
-            'ip'      => $ip,
-            'created' => Time::now()->asSqlTimestamp()
+            'email' => $email,
+            'ip'    => $ip
         ];
 
-        if ($this->database->insert("@@ps_subscribers", $data) === false) {
+        if ($this->database->insert(self::TABLE_NAME, $data) === false) {
             throw new \RuntimeException('Unable to add subscriber to the database');
         }
     }

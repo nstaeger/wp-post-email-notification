@@ -28,8 +28,13 @@ class Time
 
     public function plusMinutes($minutes)
     {
-        if (is_int($minutes)) {
-            $this->timestamp += $minutes * 60;
+        return $this->addSeconds($minutes * 60);
+    }
+
+    public function addSeconds($seconds)
+    {
+        if (is_int($seconds)) {
+            $this->timestamp += $seconds;
         }
 
         return $this;

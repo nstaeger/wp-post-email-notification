@@ -30,5 +30,8 @@ class WordpressEventBroker implements EventBroker
                 $dispatcher->fire('deactivate');
             }
         );
+
+        add_action('init', function() use ($dispatcher) { $dispatcher->fire('init'); });
+        add_action('wp_loaded', function() use ($dispatcher) { $dispatcher->fire('loaded'); });
     }
 }

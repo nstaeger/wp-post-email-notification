@@ -24,10 +24,10 @@ class WordpressDatabaseBroker implements DatabaseBroker
 
     public function executePreparedQuery($query, $args)
     {
-        $parsed = $this->parsePrefix($query);
-        $prepared = $this->databaseConnection->prepare($parsed, $args);
+        $prepared = $this->databaseConnection->prepare($query, $args);
+        $parsed = $this->parsePrefix($prepared);
 
-        return $this->databaseConnection->query($prepared);
+        return $this->databaseConnection->query($parsed);
     }
 
     public function executeQuery($query)

@@ -8,9 +8,11 @@
  * Author URI: http://nstaeger.de
  */
 
+use Nstaeger\Framework\Asset\AssetItem;
 use Nstaeger\Framework\Configuration;
 use Nstaeger\Framework\Creator\WordpressCreator;
 use Nstaeger\WpPostSubscription\Plugin;
+use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -25,6 +27,17 @@ $configuration = new Configuration(
 );
 
 $plugin = new Plugin($configuration, new WordpressCreator());
+
+$plugin->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
+
+add_action(
+    'widgets_init',
+    function () {
+        register_widget(SubscriptionWidget::class);
+    },
+    10,
+    2
+);
 
 add_action(
     'transition_post_status',

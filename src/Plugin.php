@@ -24,10 +24,10 @@ class Plugin extends BasePlugin
         $this->ajax()->registerEndpoint('subscriber', 'GET', 'AdminSubscriberController@get');
         $this->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
         $this->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
+        $this->ajax()->registerEndpoint('job', 'GET', 'AdminJobController@get');
         $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
 
-        $this->registerWidget(SubscriptionWidget::class);
-
+        $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));
     }
 
@@ -56,16 +56,45 @@ class Plugin extends BasePlugin
         $this->jobs()->createNewJob($id);
     }
 
-    public function registerWidget($class)
+    public function sendNotifications()
     {
-        $this->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
+        $numberOfMails = 1;
+        $jobs = $this->jobs()->getNextJob();
 
-        add_action(
-            'widgets_init',
-            function () use ($class) {
-                register_widget($class);
+        if (empty($jobs)) {
+            return;
+        }
+
+        foreach ($jobs as $job) {
+            $recipients = $this->subscriber()->getEmails($job['offset'], $numberOfMails);
+
+            if (!empty($recipients)) {
+                $post = get_post($job['post_id']);
+
+                $author = get_the_author_meta('display_name', $post->post_author);
+                $title = $post->post_title;
+                $permalink = get_permalink($post->ID);
+                $subject = sprintf('New Post: %s', $title);
+                $message = sprintf(
+                    '%s published a new post named %s. Access it here: %s',
+                    $author,
+                    $title,
+                    $permalink
+                );
+                $headers[] = '';
+
+                foreach ($recipients as $recipient) {
+                    wp_mail([$recipient['email']], $subject, $message, $headers);
+                }
             }
-        );
+
+            if (sizeof($recipients) < $numberOfMails) {
+                $this->jobs()->completeJob($job['id']);
+            }
+            else {
+                $this->jobs()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
+            }
+        }
     }
 
     /**

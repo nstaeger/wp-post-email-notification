@@ -6,7 +6,8 @@ module.exports = {
 
     data: {
         url:           ajaxurl + '?action=wpps_v1_',
-        subscribers:   null,
+        jobs:          [],
+        subscribers:   [],
         newSubscriber: {
             email: ""
         }
@@ -16,6 +17,10 @@ module.exports = {
         this.$http.post(this.url + 'subscriber_get').then(function (response) {
             this.$set('subscribers', response.data);
         });
+
+        this.$http.post(this.url + 'job_get').then(function (response) {
+            this.$set('jobs', response.data);
+        });
     },
 
     methods: {
@@ -24,6 +29,20 @@ module.exports = {
             this.$http.post(this.url + 'subscriber_post', this.newSubscriber).then(function (response) {
                 this.$set('subscribers', response.data);
                 this.$set('newSubscriber.email', "");
+            });
+        },
+
+        deleteJob: function (id) {
+            if (!window.confirm("Do you really want to delete job #" + id + "?")) {
+                return;
+            }
+
+            var data = {
+                id: id
+            };
+
+            this.$http.post(this.url + 'job_delete', data).then(function (response) {
+                this.$set('jobs', response.data);
             });
         },
 
