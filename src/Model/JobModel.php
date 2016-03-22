@@ -3,6 +3,7 @@
 namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
+use Nstaeger\Framework\Support\ArgCheck;
 use Nstaeger\Framework\Support\Time;
 
 class JobModel
@@ -21,8 +22,10 @@ class JobModel
 
     public function createNewJob($post_id)
     {
-        if ($post_id == null || !is_int($post_id) || $post_id < 1) {
-            throw new \RuntimeException('postId must be an integer value greater than 0');
+        ArgCheck::isInt($post_id);
+
+        if ($post_id < 1) {
+            throw new \InvalidArgumentException('postId must be an integer value greater than 0');
         }
 
         $data = [
@@ -55,6 +58,8 @@ class JobModel
 
     public function delete($id)
     {
+        ArgCheck::isInt($id);
+
         $where = [
             'id' => $id
         ];
@@ -93,7 +98,16 @@ class JobModel
 
     public function rescheduleWithNewOffset($id, $addToOffset)
     {
-        $query = sprintf("UPDATE %s SET offset = offset + %d, next_round_gmt = %s WHERE id = %u", self::TABLE_NAME, $addToOffset, Time::now()->addSeconds(2), $id);
+        ArgCheck::isInt($id);
+        ArgCheck::isInt($addToOffset);
+
+        $query = sprintf(
+            "UPDATE %s SET offset = offset + %u, next_round_gmt = '%s' WHERE id = %u",
+            self::TABLE_NAME,
+            $addToOffset,
+            Time::now()->addSeconds(2)->asSqlTimestamp(),
+            $id
+        );
 
         return $this->database->executeQuery($query);
     }
