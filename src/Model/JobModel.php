@@ -2,9 +2,9 @@
 
 namespace Nstaeger\WpPostSubscription\Model;
 
-use Nstaeger\Framework\Broker\DatabaseBroker;
-use Nstaeger\Framework\Support\ArgCheck;
-use Nstaeger\Framework\Support\Time;
+use Nstaeger\CmsPluginFramework\Broker\DatabaseBroker;
+use Nstaeger\CmsPluginFramework\Support\ArgCheck;
+use Nstaeger\CmsPluginFramework\Support\Time;
 
 class JobModel
 {

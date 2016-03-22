@@ -2,8 +2,8 @@
 
 namespace Nstaeger\WpPostSubscription\Controller;
 
-use Nstaeger\Framework\Controller;
-use Nstaeger\Framework\Http\Exceptions\HttpBadRequestException;
+use Nstaeger\CmsPluginFramework\Controller;
+use Nstaeger\CmsPluginFramework\Http\Exceptions\HttpBadRequestException;
 use Nstaeger\WpPostSubscription\Model\SubscriberModel;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;

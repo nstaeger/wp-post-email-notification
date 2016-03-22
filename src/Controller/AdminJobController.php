@@ -2,8 +2,8 @@
 
 namespace Nstaeger\WpPostSubscription\Controller;
 
-use Nstaeger\Framework\Controller;
-use Nstaeger\Framework\Http\Exceptions\HttpBadRequestException;
+use Nstaeger\CmsPluginFramework\Controller;
+use Nstaeger\CmsPluginFramework\Http\Exceptions\HttpBadRequestException;
 use Nstaeger\WpPostSubscription\Model\JobModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,10 +2,10 @@
 
 namespace Nstaeger\WpPostSubscription;
 
-use Nstaeger\Framework\Asset\AssetItem;
-use Nstaeger\Framework\Configuration;
-use Nstaeger\Framework\Creator\Creator;
-use Nstaeger\Framework\Plugin as BasePlugin;
+use Nstaeger\CmsPluginFramework\Asset\AssetItem;
+use Nstaeger\CmsPluginFramework\Configuration;
+use Nstaeger\CmsPluginFramework\Creator\Creator;
+use Nstaeger\CmsPluginFramework\Plugin as BasePlugin;
 use Nstaeger\WpPostSubscription\Model\JobModel;
 use Nstaeger\WpPostSubscription\Model\SubscriberModel;
 use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;

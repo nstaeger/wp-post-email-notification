@@ -2,8 +2,8 @@
 
 namespace Nstaeger\WpPostSubscription\Model;
 
-use Nstaeger\Framework\Broker\DatabaseBroker;
-use Nstaeger\Framework\Support\ArgCheck;
+use Nstaeger\CmsPluginFramework\Broker\DatabaseBroker;
+use Nstaeger\CmsPluginFramework\Support\ArgCheck;
 use Symfony\Component\HttpFoundation\Request;
 
 class SubscriberModel

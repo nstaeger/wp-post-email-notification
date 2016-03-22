@@ -8,9 +8,9 @@
  * Author URI: http://nstaeger.de
  */
 
-use Nstaeger\Framework\Asset\AssetItem;
-use Nstaeger\Framework\Configuration;
-use Nstaeger\Framework\Creator\WordpressCreator;
+use Nstaeger\CmsPluginFramework\Asset\AssetItem;
+use Nstaeger\CmsPluginFramework\Configuration;
+use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
 use Nstaeger\WpPostSubscription\Plugin;
 use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 

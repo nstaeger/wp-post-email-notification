@@ -2,7 +2,7 @@
 
 namespace Nstaeger\WpPostSubscription\Controller;
 
-use Nstaeger\Framework\Controller;
+use Nstaeger\CmsPluginFramework\Controller;
 
 class AdminPageController extends Controller
 {

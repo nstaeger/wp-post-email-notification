@@ -2,7 +2,7 @@
 
 namespace Nstaeger\WpPostSubscription\Widget;
 
-use Nstaeger\Framework\Templating\TemplateRenderer;
+use Nstaeger\CmsPluginFramework\Templating\TemplateRenderer;
 use Nstaeger\WpPostSubscription\Plugin;
 
 class SubscriptionWidget extends \WP_Widget

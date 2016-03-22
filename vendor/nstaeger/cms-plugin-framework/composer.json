@@ -1,6 +1,7 @@
 {
-    "name": "nstaeger/wp-post-subscription",
-    "description": "Send email notifications to subscribers when new posts are made",
+    "name": "nstaeger/cms-plugin-framework",
+    "description": "A plugin framework for content management systems",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Nicolai Stäger",
@@ -15,8 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Nstaeger\\CmsPluginFramework\\": "vendor/nstaeger/cms-plugin-framework/src",
-            "Nstaeger\\WpPostSubscription\\": "src"
+            "Nstaeger\\CmsPluginFramework\\": "src"
         }
     }
 }
