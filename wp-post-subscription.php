@@ -45,6 +45,9 @@ add_action(
         if ($new_status == 'publish' && $old_status != 'publish') {
             $plugin->events()->fire('post-published', [$post->ID]);
         }
+        else if ($old_status == 'publish' && $new_status != 'publish') {
+            $plugin->events()->fire('post-unpublished', [$post->ID]);
+        }
     },
     10,
     3

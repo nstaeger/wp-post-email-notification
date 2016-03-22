@@ -30,6 +30,7 @@ class Plugin extends BasePlugin
 
         $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));
+        $this->events()->on('post-unpublished', array($this, 'postUnpublished'));
     }
 
     public function activate()
@@ -55,6 +56,11 @@ class Plugin extends BasePlugin
     public function postPublished($id)
     {
         $this->jobs()->createNewJob($id);
+    }
+
+    public function postUnpublished($id)
+    {
+        $this->jobs()->removeJobsFor($id);
     }
 
     public function sendNotifications()

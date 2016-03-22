@@ -20,6 +20,11 @@ class JobModel
         $this->database = $database;
     }
 
+    public function completeJob($id)
+    {
+        $this->delete($id);
+    }
+
     public function createNewJob($post_id)
     {
         ArgCheck::isInt($post_id);
@@ -65,7 +70,7 @@ class JobModel
         ];
 
         if ($this->database->delete(self::TABLE_NAME, $where) === false) {
-            throw new \RuntimeException('Unable to delete subscriber from database (Post Subscription Plugin)');
+            throw new \RuntimeException('Unable to delete job from database (Post Subscription Plugin)');
         }
     }
 
@@ -96,6 +101,19 @@ class JobModel
         return $this->database->fetchAll($query);
     }
 
+    public function removeJobsFor($postId)
+    {
+        ArgCheck::isInt($postId);
+
+        $where = [
+            'post_id' => $postId
+        ];
+
+        if ($this->database->delete(self::TABLE_NAME, $where) === false) {
+            throw new \RuntimeException('Unable to delete job from database (Post Subscription Plugin)');
+        }
+    }
+
     public function rescheduleWithNewOffset($id, $addToOffset)
     {
         ArgCheck::isInt($id);
@@ -110,10 +128,5 @@ class JobModel
         );
 
         return $this->database->executeQuery($query);
-    }
-
-    public function completeJob($id)
-    {
-        $this->delete($id);
     }
 }
