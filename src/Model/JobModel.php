@@ -28,7 +28,7 @@ class JobModel
         $data = [
             'offset'         => 0,
             'post_id'        => $post_id,
-            'next_round_gmt' => Time::now()->plusMinutes(5)->asSqlTimestamp(),
+            'next_round_gmt' => Time::now()->plusMinutes(1)->asSqlTimestamp(),
             'created_gmt'    => Time::now()->asSqlTimestamp()
         ];
 

@@ -25,6 +25,7 @@ class Plugin extends BasePlugin
         $this->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
         $this->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
         $this->ajax()->registerEndpoint('job', 'GET', 'AdminJobController@get');
+        $this->ajax()->registerEndpoint('job', 'DELETE', 'AdminJobController@delete');
         $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
 
         $this->events()->on('loaded', array($this, 'sendNotifications'));
