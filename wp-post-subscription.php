@@ -25,3 +25,14 @@ $configuration = new Configuration(
 );
 
 $plugin = new Plugin($configuration, new WordpressCreator());
+
+add_action(
+    'transition_post_status',
+    function ($new_status, $old_status, $post) use ($plugin) {
+        if ($new_status == 'publish' && $old_status != 'publish') {
+            $plugin->events()->fire('post-published', [$post->ID]);
+        }
+    },
+    10,
+    3
+);

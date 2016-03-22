@@ -27,16 +27,33 @@ class Plugin extends BasePlugin
         $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
 
         $this->registerWidget(SubscriptionWidget::class);
+
+        $this->events()->on('post-published', array($this, 'postPublished'));
     }
 
     public function activate()
     {
+        $this->jobs()->createTable();
         $this->subscriber()->createTable();
     }
 
     public function deactivate()
     {
+        $this->jobs()->dropTable();
         $this->subscriber()->dropTable();
+    }
+
+    /**
+     * @return JobModel
+     */
+    public function jobs()
+    {
+        return $this->make(JobModel::class);
+    }
+
+    public function postPublished($id)
+    {
+        $this->jobs()->createNewJob($id);
     }
 
     public function registerWidget($class)
@@ -49,14 +66,6 @@ class Plugin extends BasePlugin
                 register_widget($class);
             }
         );
-    }
-
-    /**
-     * @return JobModel
-     */
-    public function jobs()
-    {
-        return $this->make(JobModel::class);
     }
 
     /**

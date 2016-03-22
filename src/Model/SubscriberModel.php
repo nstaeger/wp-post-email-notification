@@ -3,6 +3,7 @@
 namespace Nstaeger\WpPostSubscription\Model;
 
 use Nstaeger\Framework\Broker\DatabaseBroker;
+use Nstaeger\Framework\Support\Time;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -91,11 +92,11 @@ class SubscriberModel
         $data = [
             'email'   => $email,
             'ip'      => $ip,
-            'created' => current_time('mysql')
+            'created' => Time::now()->asSqlTimestamp()
         ];
 
         if ($this->database->insert("@@ps_subscribers", $data) === false) {
-            throw new \RuntimeException('Unable to add subscriber to the database (Post Subscription Plugin)');
+            throw new \RuntimeException('Unable to add subscriber to the database');
         }
     }
 }
