@@ -1,3 +1,5 @@
 /js/bundle
 /node_modules
-/vendor
+/vendor/*
+!/vendor/nstaeger/
+!/vendor/nstaeger/cms-plugin-framework
