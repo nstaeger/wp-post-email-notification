@@ -6,6 +6,7 @@ use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\Creator;
 use Nstaeger\CmsPluginFramework\Plugin;
 use Nstaeger\WpPostEmailNotification\Model\JobModel;
+use Nstaeger\WpPostEmailNotification\Model\Option;
 use Nstaeger\WpPostEmailNotification\Model\SubscriberModel;
 
 class WpPostEmailNotificationPlugin extends Plugin
@@ -19,12 +20,14 @@ class WpPostEmailNotificationPlugin extends Plugin
              ->withAsset('js/bundle/admin-options.js');
 
         // TODO access control!
+        $this->ajax()->registerEndpoint('job', 'DELETE', 'AdminJobController@delete');
+        $this->ajax()->registerEndpoint('job', 'GET', 'AdminJobController@get');
+        $this->ajax()->registerEndpoint('option', 'GET', 'AdminOptionController@get');
+        $this->ajax()->registerEndpoint('option', 'PUT', 'AdminOptionController@update');
+        $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
+        $this->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
         $this->ajax()->registerEndpoint('subscriber', 'GET', 'AdminSubscriberController@get');
         $this->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
-        $this->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
-        $this->ajax()->registerEndpoint('job', 'GET', 'AdminJobController@get');
-        $this->ajax()->registerEndpoint('job', 'DELETE', 'AdminJobController@delete');
-        $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
 
         $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));
@@ -49,6 +52,14 @@ class WpPostEmailNotificationPlugin extends Plugin
     public function jobs()
     {
         return $this->make(JobModel::class);
+    }
+
+    /**
+     * @return Option
+     */
+    public function option()
+    {
+        return $this->make(Option::class);
     }
 
     public function postPublished($id)

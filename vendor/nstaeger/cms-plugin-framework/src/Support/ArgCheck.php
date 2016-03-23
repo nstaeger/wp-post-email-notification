@@ -6,6 +6,13 @@ use InvalidArgumentException;
 
 class ArgCheck
 {
+    public static function isArray($arg)
+    {
+        if (!is_array($arg)) {
+            throw new InvalidArgumentException("Expected an array, but was: " . $arg);
+        }
+    }
+
     public static function isEmail($arg)
     {
         if (empty($arg) || !is_email($arg)) {
