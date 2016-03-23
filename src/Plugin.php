@@ -2,13 +2,11 @@
 
 namespace Nstaeger\WpPostSubscription;
 
-use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\Creator;
 use Nstaeger\CmsPluginFramework\Plugin as BasePlugin;
 use Nstaeger\WpPostSubscription\Model\JobModel;
 use Nstaeger\WpPostSubscription\Model\SubscriberModel;
-use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
 
 class Plugin extends BasePlugin
 {
@@ -75,6 +73,13 @@ class Plugin extends BasePlugin
         foreach ($jobs as $job) {
             $recipients = $this->subscriber()->getEmails($job['offset'], $numberOfMails);
 
+            if (sizeof($recipients) < $numberOfMails) {
+                $this->jobs()->completeJob($job['id']);
+            }
+            else {
+                $this->jobs()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
+            }
+
             if (!empty($recipients)) {
                 $post = get_post($job['post_id']);
 
@@ -93,13 +98,6 @@ class Plugin extends BasePlugin
                 foreach ($recipients as $recipient) {
                     wp_mail([$recipient['email']], $subject, $message, $headers);
                 }
-            }
-
-            if (sizeof($recipients) < $numberOfMails) {
-                $this->jobs()->completeJob($job['id']);
-            }
-            else {
-                $this->jobs()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
             }
         }
     }

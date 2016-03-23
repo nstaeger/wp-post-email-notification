@@ -8,6 +8,13 @@
  * Author URI: http://nstaeger.de
  */
 
+/**
+ * TODO better check email-sending
+ * TODO check if deleting of jobs works as expected
+ * TODO add options to modify email-look
+ * TODO look over the sendEmail method again
+ */
+
 use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
