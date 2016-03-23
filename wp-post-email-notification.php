@@ -18,7 +18,7 @@
 use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
-use Nstaeger\WpPostEmailNotification\Plugin;
+use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
 use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -34,7 +34,7 @@ $configuration = new Configuration(
     ]
 );
 
-$plugin = new Plugin($configuration, new WordpressCreator());
+$plugin = new WpPostEmailNotificationPlugin($configuration, new WordpressCreator());
 
 $plugin->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
 

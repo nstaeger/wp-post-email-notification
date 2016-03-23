@@ -3,7 +3,7 @@
 namespace Nstaeger\WpPostEmailNotification\Widget;
 
 use Nstaeger\CmsPluginFramework\Templating\TemplateRenderer;
-use Nstaeger\WpPostEmailNotification\Plugin;
+use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
 
 class SubscriptionWidget extends \WP_Widget
 {
@@ -17,7 +17,7 @@ class SubscriptionWidget extends \WP_Widget
      */
     public function __construct()
     {
-        $this->renderer = Plugin::getInstance()->renderer();
+        $this->renderer = WpPostEmailNotificationPlugin::getInstance()->renderer();
 
         $widget_ops = array(
             'class_name'  => 'SubscriptionWidget',

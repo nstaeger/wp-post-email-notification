@@ -4,11 +4,11 @@ namespace Nstaeger\WpPostEmailNotification;
 
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\Creator;
-use Nstaeger\CmsPluginFramework\Plugin as BasePlugin;
+use Nstaeger\CmsPluginFramework\Plugin;
 use Nstaeger\WpPostEmailNotification\Model\JobModel;
 use Nstaeger\WpPostEmailNotification\Model\SubscriberModel;
 
-class Plugin extends BasePlugin
+class WpPostEmailNotificationPlugin extends Plugin
 {
     function __construct(Configuration $configuration, Creator $creator)
     {
