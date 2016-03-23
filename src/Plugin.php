@@ -1,12 +1,12 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription;
+namespace Nstaeger\WpPostEmailNotification;
 
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\Creator;
 use Nstaeger\CmsPluginFramework\Plugin as BasePlugin;
-use Nstaeger\WpPostSubscription\Model\JobModel;
-use Nstaeger\WpPostSubscription\Model\SubscriberModel;
+use Nstaeger\WpPostEmailNotification\Model\JobModel;
+use Nstaeger\WpPostEmailNotification\Model\SubscriberModel;
 
 class Plugin extends BasePlugin
 {

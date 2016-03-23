@@ -1,6 +1,6 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription\Controller;
+namespace Nstaeger\WpPostEmailNotification\Controller;
 
 use Nstaeger\CmsPluginFramework\Controller;
 

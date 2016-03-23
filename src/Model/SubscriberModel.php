@@ -1,6 +1,6 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription\Model;
+namespace Nstaeger\WpPostEmailNotification\Model;
 
 use Nstaeger\CmsPluginFramework\Broker\DatabaseBroker;
 use Nstaeger\CmsPluginFramework\Support\ArgCheck;

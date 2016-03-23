@@ -16,7 +16,7 @@
     "autoload": {
         "psr-4": {
             "Nstaeger\\CmsPluginFramework\\": "vendor/nstaeger/cms-plugin-framework/src",
-            "Nstaeger\\WpPostSubscription\\": "src"
+            "Nstaeger\\WpPostEmailNotification\\": "src"
         }
     }
 }

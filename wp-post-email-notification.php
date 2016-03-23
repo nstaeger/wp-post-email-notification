@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Plugin Name: WP Post Subscription
- * Description: Send email notifications to subscribers when new posts are made
+ * Plugin Name: WP Post Email Notification
+ * Description: Send email notifications to subscribers when a new post was published
  * Version: 0.1.0
  * Author: Nicolai Stäger
  * Author URI: http://nstaeger.de
  */
 
 /**
+ * TODO add options to modify email-look
  * TODO better check email-sending
  * TODO check if deleting of jobs works as expected
- * TODO add options to modify email-look
  * TODO look over the sendEmail method again
  */
 
 use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
-use Nstaeger\WpPostSubscription\Plugin;
-use Nstaeger\WpPostSubscription\Widget\SubscriptionWidget;
+use Nstaeger\WpPostEmailNotification\Plugin;
+use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -28,7 +28,7 @@ $configuration = new Configuration(
         'plugin_dir'           => __DIR__,
         'plugin_main_file'     => __FILE__,
         'plugin_url'           => plugin_dir_url(__FILE__),
-        'controller_namespace' => "Nstaeger\\WpPostSubscription\\Controller",
+        'controller_namespace' => "Nstaeger\\WpPostEmailNotification\\Controller",
         'rest_prefix'          => 'wpps_v1'
     ]
 );

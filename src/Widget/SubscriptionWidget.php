@@ -1,9 +1,9 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription\Widget;
+namespace Nstaeger\WpPostEmailNotification\Widget;
 
 use Nstaeger\CmsPluginFramework\Templating\TemplateRenderer;
-use Nstaeger\WpPostSubscription\Plugin;
+use Nstaeger\WpPostEmailNotification\Plugin;
 
 class SubscriptionWidget extends \WP_Widget
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Nstaeger\WpPostSubscription\Controller;
+namespace Nstaeger\WpPostEmailNotification\Controller;
 
 use InvalidArgumentException;
 use Nstaeger\CmsPluginFramework\Controller;
 use Nstaeger\CmsPluginFramework\Http\Exceptions\HttpBadRequestException;
-use Nstaeger\WpPostSubscription\Model\SubscriberModel;
+use Nstaeger\WpPostEmailNotification\Model\SubscriberModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
