@@ -28,4 +28,11 @@ class ArgCheck
             throw new InvalidArgumentException("Expected an IP, but was " . $arg);
         }
     }
+
+    public static function notNull($arg)
+    {
+        if ($arg == null) {
+            throw new InvalidArgumentException("Expected null, but was " . $arg);
+        }
+    }
 }

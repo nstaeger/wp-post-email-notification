@@ -29,7 +29,8 @@ $configuration = new Configuration(
         'plugin_main_file'     => __FILE__,
         'plugin_url'           => plugin_dir_url(__FILE__),
         'controller_namespace' => "Nstaeger\\WpPostEmailNotification\\Controller",
-        'rest_prefix'          => 'wpps_v1'
+        'option_prefix'        => 'wpps_', // TODO rename
+        'rest_prefix'          => 'wpps_v1' // TODO rename
     ]
 );
 
@@ -51,9 +52,10 @@ add_action(
     function ($new_status, $old_status, $post) use ($plugin) {
         if ($new_status == 'publish' && $old_status != 'publish') {
             $plugin->events()->fire('post-published', [$post->ID]);
-        }
-        else if ($old_status == 'publish' && $new_status != 'publish') {
-            $plugin->events()->fire('post-unpublished', [$post->ID]);
+        } else {
+            if ($old_status == 'publish' && $new_status != 'publish') {
+                $plugin->events()->fire('post-unpublished', [$post->ID]);
+            }
         }
     },
     10,

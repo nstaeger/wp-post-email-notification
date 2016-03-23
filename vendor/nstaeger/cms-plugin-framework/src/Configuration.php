@@ -46,6 +46,16 @@ class Configuration
     }
 
     /**
+     * Get the prefix to be used when storing options.
+     *
+     * @return string
+     */
+    public function getOptionPrefix()
+    {
+        return $this->config['option_prefix'];
+    }
+
+    /**
      * Get the rest prefix url/string
      */
     public function getRestPrefix()
