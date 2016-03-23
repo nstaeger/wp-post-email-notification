@@ -5,7 +5,7 @@ module.exports = {
     el: '#wp-ps-options',
 
     data: {
-        url:                 ajaxurl + '?action=wpps_v1_',
+        url:                 ajaxurl + '?action=wppen_v1_',
         options:             [],
         jobs:                [],
         subscribers:         [],

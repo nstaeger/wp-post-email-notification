@@ -5,7 +5,7 @@ module.exports = {
     el: '.widget_subscriptionwidget',
 
     data: {
-        url:        ajaxurl + '?action=wpps_v1_',
+        url:        ajaxurl + '?action=wppen_v1_',
         success:    false,
         subscriber: {
             email: ''

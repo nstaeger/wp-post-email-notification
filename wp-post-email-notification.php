@@ -8,12 +8,6 @@
  * Author URI: http://nstaeger.de
  */
 
-/**
- * TODO better check email-sending
- * TODO check if deleting of jobs works as expected
- * TODO look over the sendEmail method again
- */
-
 use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
@@ -28,8 +22,8 @@ $configuration = new Configuration(
         'plugin_main_file'     => __FILE__,
         'plugin_url'           => plugin_dir_url(__FILE__),
         'controller_namespace' => "Nstaeger\\WpPostEmailNotification\\Controller",
-        'option_prefix'        => 'wpps_', // TODO rename
-        'rest_prefix'          => 'wpps_v1' // TODO rename
+        'option_prefix'        => 'wppen_',
+        'rest_prefix'          => 'wppen_v1'
     ]
 );
 
