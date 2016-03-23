@@ -15,7 +15,7 @@ class WpPostEmailNotificationPlugin extends Plugin
     {
         parent::__construct($configuration, $creator);
 
-        $this->menu()->registerAdminMenuItem('WP Post Subscription')
+        $this->menu()->registerAdminMenuItem('WP Post Email Notification')
              ->withAction('AdminPageController@optionsPage')
              ->withAsset('js/bundle/admin-options.js');
 
@@ -32,20 +32,6 @@ class WpPostEmailNotificationPlugin extends Plugin
         $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));
         $this->events()->on('post-unpublished', array($this, 'postUnpublished'));
-    }
-
-    public function activate()
-    {
-        $this->option()->createDefaults();
-        $this->job()->createTable();
-        $this->subscriber()->createTable();
-    }
-
-    public function deactivate()
-    {
-        $this->option()->deleteAll();
-        $this->job()->dropTable();
-        $this->subscriber()->dropTable();
     }
 
     /**
@@ -129,5 +115,19 @@ class WpPostEmailNotificationPlugin extends Plugin
     public function subscriber()
     {
         return $this->make(SubscriberModel::class);
+    }
+
+    protected function activate()
+    {
+        $this->option()->createDefaults();
+        $this->job()->createTable();
+        $this->subscriber()->createTable();
+    }
+
+    protected function uninstall()
+    {
+        $this->option()->deleteAll();
+        $this->job()->dropTable();
+        $this->subscriber()->dropTable();
     }
 }
