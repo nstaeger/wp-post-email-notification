@@ -8,7 +8,7 @@ use Nstaeger\CmsPluginFramework\Support\Time;
 
 class JobModel
 {
-    const TABLE_NAME = '@@ps_jobs';
+    const TABLE_NAME = '@@wppen_jobs';
 
     /**
      * @var DatabaseBroker

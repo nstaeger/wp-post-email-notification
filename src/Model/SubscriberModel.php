@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubscriberModel
 {
-    const TABLE_NAME = '@@ps_subscribers';
+    const TABLE_NAME = '@@wppen_subscribers';
 
     /**
      * @var DatabaseBroker
