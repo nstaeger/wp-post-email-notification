@@ -84,7 +84,7 @@
 
     <h2>Options</h2>
 
-    <p>Possible Placeholders: <code>@@blog.title</code>, <code>@@post.title</code>, <code>@@post.author.name</code>,
+    <p>Possible Placeholders: <code>@@blog.name</code>, <code>@@post.title</code>, <code>@@post.author.name</code>,
         <code>@@post.link</code></p>
 
     <form v-on:submit.prevent="updateOptions">

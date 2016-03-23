@@ -76,7 +76,7 @@ class WpPostEmailNotificationPlugin extends Plugin
 
     public function sendNotifications()
     {
-        $numberOfMails = 1;
+        $numberOfMails = $this->option()->getNumberOfEmailsSendPerRequest();
         $jobs = $this->job()->getNextJob();
 
         if (empty($jobs)) {
@@ -88,24 +88,32 @@ class WpPostEmailNotificationPlugin extends Plugin
 
             if (sizeof($recipients) < $numberOfMails) {
                 $this->job()->completeJob($job['id']);
-            }
-            else {
+            } else {
                 $this->job()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
             }
 
             if (!empty($recipients)) {
                 $post = get_post($job['post_id']);
 
-                $author = get_the_author_meta('display_name', $post->post_author);
-                $title = $post->post_title;
-                $permalink = get_permalink($post->ID);
-                $subject = sprintf('New Post: %s', $title);
-                $message = sprintf(
-                    '%s published a new post named %s. Access it here: %s',
-                    $author,
-                    $title,
-                    $permalink
+                $blogName = get_bloginfo('name');
+                $postAuthorName = get_the_author_meta('display_name', $post->post_author);
+                $postLink = get_permalink($post->ID);
+                $postTitle = $post->post_title;
+
+                $subject = $this->option()->getEmailSubject();
+                $subject = str_replace(
+                    ['@@blog.name', '@@post.author.name', '@@post.link', '@@post.title'],
+                    [$blogName, $postAuthorName, $postLink, $postTitle],
+                    $subject
                 );
+
+                $message = $this->option()->getEmailBody();
+                $message = str_replace(
+                    ['@@blog.name', '@@post.author.name', '@@post.link', '@@post.title'],
+                    [$blogName, $postAuthorName, $postLink, $postTitle],
+                    $message
+                );
+
                 $headers[] = '';
 
                 foreach ($recipients as $recipient) {

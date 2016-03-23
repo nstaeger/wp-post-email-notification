@@ -9,7 +9,6 @@
  */
 
 /**
- * TODO add options to modify email-look
  * TODO better check email-sending
  * TODO check if deleting of jobs works as expected
  * TODO look over the sendEmail method again

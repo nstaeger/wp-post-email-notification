@@ -24,7 +24,7 @@ class Option
     public function createDefaults()
     {
         $this->setEmailBody("Hi,\n\n@@post.author.name just published a new post named @@post.title. You can view the full article here:\n\n@@post.link");
-        $this->setEmailSubject("New Post on @@blog.title");
+        $this->setEmailSubject("New Post on @@blog.name");
         $this->setNumberOfEmailsSendPerRequest(5);
     }
 
