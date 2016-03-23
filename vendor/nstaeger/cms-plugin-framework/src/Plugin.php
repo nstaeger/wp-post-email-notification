@@ -38,7 +38,6 @@ class Plugin extends Container
 
         $this->events()->on('activate', array($this, 'activate'));
         $this->events()->on('deactivate', array($this, 'deactivate'));
-        $this->events()->on('uninstall', array($this, 'uninstall'));
     }
 
     /**
@@ -93,14 +92,6 @@ class Plugin extends Container
      * is being called automatically, when the plugin is being deactivated
      */
     protected function deactivate()
-    {
-        // noop
-    }
-
-    /**
-     * is being called automatically, when the plugin is being uninstalled
-     */
-    protected function uninstall()
     {
         // noop
     }

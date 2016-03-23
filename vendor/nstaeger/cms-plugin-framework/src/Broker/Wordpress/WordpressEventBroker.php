@@ -12,6 +12,10 @@ class WordpressEventBroker implements EventBroker
      * @var EventDispatcher
      */
     private $dispatcher;
+
+    /**
+     * @var string
+     */
     private $mainPluginFile;
 
     public function __construct(Configuration $configuration, EventDispatcher $dispatcher)
@@ -23,30 +27,20 @@ class WordpressEventBroker implements EventBroker
     function fireAll()
     {
         register_activation_hook(
-            __FILE__,
+            $this->mainPluginFile,
             function () {
                 $this->dispatcher->fire('activate');
             }
         );
 
         register_deactivation_hook(
-            __FILE__,
+            $this->mainPluginFile,
             function () {
                 $this->dispatcher->fire('deactivate');
             }
         );
 
-        register_uninstall_hook(
-            __FILE__,
-            array($this, 'fireUninstall')
-        );
-
         add_action('init', function() { $this->dispatcher->fire('init'); });
         add_action('wp_loaded', function() { $this->dispatcher->fire('loaded'); });
-    }
-
-    private function fireUninstall()
-    {
-        $this->dispatcher->fire('uninstall');
     }
 }

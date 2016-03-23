@@ -117,17 +117,10 @@ class WpPostEmailNotificationPlugin extends Plugin
         return $this->make(SubscriberModel::class);
     }
 
-    protected function activate()
+    public function activate()
     {
-        $this->option()->createDefaults();
         $this->job()->createTable();
         $this->subscriber()->createTable();
-    }
-
-    protected function uninstall()
-    {
-        $this->option()->deleteAll();
-        $this->job()->dropTable();
-        $this->subscriber()->dropTable();
+        $this->option()->createDefaults();
     }
 }
