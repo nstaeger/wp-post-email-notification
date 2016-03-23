@@ -12,12 +12,9 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 }
 
 require __DIR__ . '/vendor/autoload.php';
+$config = require  __DIR__ . '/config.php';
 
-$configuration = new Configuration(
-    [
-        'option_prefix' => 'wppen_'
-    ]
-);
+$configuration = new Configuration($config);
 
 $option = new Option(new WordpressOptionsBroker($configuration));
 $option->deleteAll();

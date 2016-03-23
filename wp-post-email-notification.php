@@ -15,19 +15,9 @@ use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
 use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
 
 require __DIR__ . '/vendor/autoload.php';
+$config = require  __DIR__ . '/config.php';
 
-$configuration = new Configuration(
-    [
-        'plugin_dir'           => __DIR__,
-        'plugin_main_file'     => __FILE__,
-        'plugin_url'           => plugin_dir_url(__FILE__),
-        'controller_namespace' => "Nstaeger\\WpPostEmailNotification\\Controller",
-        'option_prefix'        => 'wppen_',
-        'rest_prefix'          => 'wppen_v1'
-    ]
-);
-
-$plugin = new WpPostEmailNotificationPlugin($configuration, new WordpressCreator());
+$plugin = new WpPostEmailNotificationPlugin(new Configuration($config), new WordpressCreator());
 
 $plugin->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
 
