@@ -36,20 +36,22 @@ class WpPostEmailNotificationPlugin extends Plugin
 
     public function activate()
     {
-        $this->jobs()->createTable();
+        $this->option()->createDefaults();
+        $this->job()->createTable();
         $this->subscriber()->createTable();
     }
 
     public function deactivate()
     {
-        $this->jobs()->dropTable();
+        $this->option()->deleteAll();
+        $this->job()->dropTable();
         $this->subscriber()->dropTable();
     }
 
     /**
      * @return JobModel
      */
-    public function jobs()
+    public function job()
     {
         return $this->make(JobModel::class);
     }
@@ -64,18 +66,18 @@ class WpPostEmailNotificationPlugin extends Plugin
 
     public function postPublished($id)
     {
-        $this->jobs()->createNewJob($id);
+        $this->job()->createNewJob($id);
     }
 
     public function postUnpublished($id)
     {
-        $this->jobs()->removeJobsFor($id);
+        $this->job()->removeJobsFor($id);
     }
 
     public function sendNotifications()
     {
         $numberOfMails = 1;
-        $jobs = $this->jobs()->getNextJob();
+        $jobs = $this->job()->getNextJob();
 
         if (empty($jobs)) {
             return;
@@ -85,10 +87,10 @@ class WpPostEmailNotificationPlugin extends Plugin
             $recipients = $this->subscriber()->getEmails($job['offset'], $numberOfMails);
 
             if (sizeof($recipients) < $numberOfMails) {
-                $this->jobs()->completeJob($job['id']);
+                $this->job()->completeJob($job['id']);
             }
             else {
-                $this->jobs()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
+                $this->job()->rescheduleWithNewOffset($job['id'], sizeof($recipients));
             }
 
             if (!empty($recipients)) {

@@ -31,22 +31,26 @@
     <h3>Add subscriber manually</h3>
 
     <form v-on:submit.prevent="addNewSubscriber">
-        <input type="hidden" name="action" value="ps_add_subscriber">
         <table class="form-table">
             <tbody>
                 <tr>
                     <th><label for="add-email">Email</label></th>
-                    <td><input id="add-email" v-model="newSubscriber.email" name="email" class="regular-text" type="email" required></td>
+                    <td>
+                        <input id="add-email" v-model="newSubscriber.email" name="email" class="regular-text" type="email" required>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <input name="submit" class="button button-primary" value="Add" type="submit">
+                        <button name="submit" class="button button-primary" type="submit">Add</button>
+                        <div v-if="updatingSubscribers" class="spinner is-active" style="float: none;"></div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </form>
+
+    <hr/>
 
     <h2>Jobs</h2>
 
@@ -75,5 +79,42 @@
             </tr>
         </tbody>
     </table>
+
+    <hr style="margin-top: 25px;"/>
+
+    <h2>Options</h2>
+
+    <p>Possible Placeholders: <code>@@blog.title</code>, <code>@@post.title</code>, <code>@@post.author.name</code>,
+        <code>@@post.link</code></p>
+
+    <form v-on:submit.prevent="updateOptions">
+        <table class="form-table">
+            <tbody>
+                <tr>
+                    <th><label for="emailSubject">Email Subject</label></th>
+                    <td><input id="emailSubject" type="text" v-model="options.emailSubject" class="regular-text"/></td>
+                </tr>
+                <tr>
+                    <th><label for="emailBody">Email Body</label></th>
+                    <td>
+                        <textarea id="emailBody" v-model="options.emailBody" class="large-text" cols="50" rows="10"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="numberOfMailsSendPerRequest">Number of emails to be send per request</label></th>
+                    <td>
+                        <input id="numberOfMailsSendPerRequest" type="number" v-model="options.numberOfMailsSendPerRequest" class="regular-text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button name="submit" class="button button-primary" type="submit">Save</button>
+                        <div v-if="updatingOptions" class="spinner is-active" style="float: none;"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 
 </div>

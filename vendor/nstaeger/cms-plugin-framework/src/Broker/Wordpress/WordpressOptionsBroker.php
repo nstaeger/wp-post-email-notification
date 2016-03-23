@@ -18,11 +18,11 @@ class WordpressOptionsBroker implements OptionBroker
         $this->prefix = $configuration->getOptionPrefix();
     }
 
-    public function store($option, $value)
+    function delete($option)
     {
         ArgCheck::notNull($option);
 
-        update_option($this->prefix($option), $value);
+        delete_option($this->prefix($option));
     }
 
     public function get($option)
@@ -30,6 +30,13 @@ class WordpressOptionsBroker implements OptionBroker
         ArgCheck::notNull($option);
 
         return get_option($this->prefix($option));
+    }
+
+    public function store($option, $value)
+    {
+        ArgCheck::notNull($option);
+
+        update_option($this->prefix($option), $value);
     }
 
     private function prefix($option)

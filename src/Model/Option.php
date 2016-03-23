@@ -21,6 +21,20 @@ class Option
         $this->optionBroker = $optionBroker;
     }
 
+    public function createDefaults()
+    {
+        $this->setEmailBody("Hi,\n\n@@post.author.name just published a new post named @@post.title. You can view the full article here:\n\n@@post.link");
+        $this->setEmailSubject("New Post on @@blog.title");
+        $this->setNumberOfEmailsSendPerRequest(5);
+    }
+
+    public function deleteAll()
+    {
+        $this->optionBroker->delete(self::EMAIL_BODY);
+        $this->optionBroker->delete(self::EMAIL_SUBJECT);
+        $this->optionBroker->delete(self::NUMBER_OF_EMAILS_SEND_PER_REQUEST);
+    }
+
     public function getAll()
     {
         return [
