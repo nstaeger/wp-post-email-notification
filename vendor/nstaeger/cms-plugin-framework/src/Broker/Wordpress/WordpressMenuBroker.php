@@ -5,7 +5,7 @@ namespace Nstaeger\CmsPluginFramework\Broker\Wordpress;
 use Nstaeger\CmsPluginFramework\Broker\AssetBroker;
 use Nstaeger\CmsPluginFramework\Broker\MenuBroker;
 use Nstaeger\CmsPluginFramework\Http\Kernel;
-use Nstaeger\CmsPluginFramework\Menu\MenuItem;
+use Nstaeger\CmsPluginFramework\Item\MenuItem;
 
 class WordpressMenuBroker implements MenuBroker
 {

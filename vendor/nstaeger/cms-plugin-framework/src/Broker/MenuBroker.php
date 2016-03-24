@@ -2,7 +2,7 @@
 
 namespace Nstaeger\CmsPluginFramework\Broker;
 
-use Nstaeger\CmsPluginFramework\Menu\MenuItem;
+use Nstaeger\CmsPluginFramework\Item\MenuItem;
 
 interface MenuBroker
 {

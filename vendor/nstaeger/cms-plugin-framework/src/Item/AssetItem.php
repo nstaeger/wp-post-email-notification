@@ -1,6 +1,6 @@
 <?php
 
-namespace Nstaeger\CmsPluginFramework\Asset;
+namespace Nstaeger\CmsPluginFramework\Item;
 
 class AssetItem
 {

@@ -2,7 +2,7 @@
 
 namespace Nstaeger\CmsPluginFramework\Broker\Wordpress;
 
-use Nstaeger\CmsPluginFramework\Asset\AssetItem;
+use Nstaeger\CmsPluginFramework\Item\AssetItem;
 use Nstaeger\CmsPluginFramework\Broker\AssetBroker;
 use Nstaeger\CmsPluginFramework\Configuration;
 

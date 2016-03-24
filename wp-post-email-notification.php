@@ -2,13 +2,13 @@
 
 /**
  * Plugin Name: WP Post Email Notification
- * Description: Send email notifications to subscribers when a new post was published
+ * Description: Send email notifications to subscribers when a new post is published
  * Version: 0.1.0
  * Author: Nicolai Stäger
  * Author URI: http://nstaeger.de
  */
 
-use Nstaeger\CmsPluginFramework\Asset\AssetItem;
+use Nstaeger\CmsPluginFramework\Item\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
 use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;

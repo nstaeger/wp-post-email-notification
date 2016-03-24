@@ -2,7 +2,7 @@
 
 namespace Nstaeger\CmsPluginFramework\Broker;
 
-use Nstaeger\CmsPluginFramework\Asset\AssetItem;
+use Nstaeger\CmsPluginFramework\Item\AssetItem;
 
 interface AssetBroker
 {

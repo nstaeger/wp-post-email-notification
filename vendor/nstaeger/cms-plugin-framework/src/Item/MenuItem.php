@@ -1,8 +1,7 @@
 <?php
 
-namespace Nstaeger\CmsPluginFramework\Menu;
+namespace Nstaeger\CmsPluginFramework\Item;
 
-use Nstaeger\CmsPluginFramework\Asset\AssetItem;
 use Nstaeger\CmsPluginFramework\Support\Str;
 
 class MenuItem {
