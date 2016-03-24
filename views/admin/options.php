@@ -1,6 +1,6 @@
 <div id="wp-ps-options" class="wrap">
 
-    <h1>WP Post Subscription Options</h1>
+    <h1>WP Post Email Notification Options</h1>
 
     <h2>Subscribers</h2>
 
@@ -52,36 +52,6 @@
 
     <hr/>
 
-    <h2>Jobs</h2>
-
-    <table class="wp-list-table widefat striped">
-        <thead>
-            <tr>
-                <th style="width: 20px;">ID</th>
-                <th class="column-primary">Post ID</th>
-                <th>Offset</th>
-                <th>Next round (GMT)</th>
-                <th>Created (GMT)</th>
-                <th style="width: 20px;"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="job in jobs">
-                <td>{{ job.id }}</td>
-                <td>{{ job.post_id }}</td>
-                <td>{{ job.offset }}</td>
-                <td>{{ job.next_round_gmt }}</td>
-                <td>{{ job.created_gmt }}</td>
-                <td><span v-on:click="deleteJob(job.id)" class="dashicons dashicons-trash"></span></td>
-            </tr>
-            <tr v-if="jobs.length == 0">
-                <td colspan="5"><i>none</i></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr style="margin-top: 25px;"/>
-
     <h2>Options</h2>
 
     <p>Possible Placeholders: <code>@@blog.name</code>, <code>@@post.title</code>, <code>@@post.author.name</code>,
@@ -116,5 +86,37 @@
             </tbody>
         </table>
     </form>
+
+    <hr/>
+
+    <h2>Jobs</h2>
+
+    <p>This is a list of jobs, that are currently sending emails or wait for other jobs to complete.</p>
+
+    <table class="wp-list-table widefat striped">
+        <thead>
+            <tr>
+                <th style="width: 20px;">ID</th>
+                <th class="column-primary">Post ID</th>
+                <th>Offset</th>
+                <th>Next round (GMT)</th>
+                <th>Created (GMT)</th>
+                <th style="width: 20px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="job in jobs">
+                <td>{{ job.id }}</td>
+                <td>{{ job.post_id }}</td>
+                <td>{{ job.offset }}</td>
+                <td>{{ job.next_round_gmt }}</td>
+                <td>{{ job.created_gmt }}</td>
+                <td><span v-on:click="deleteJob(job.id)" class="dashicons dashicons-trash"></span></td>
+            </tr>
+            <tr v-if="jobs.length == 0">
+                <td colspan="5"><i>none</i></td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>
