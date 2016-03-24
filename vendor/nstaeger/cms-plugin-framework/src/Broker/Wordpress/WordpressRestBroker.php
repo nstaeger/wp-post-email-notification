@@ -9,9 +9,6 @@ use Nstaeger\CmsPluginFramework\Http\Kernel;
 use Nstaeger\CmsPluginFramework\Item\RestEndpointItem;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * TODO what about access control?
- */
 class WordpressRestBroker implements RestBroker
 {
     /**

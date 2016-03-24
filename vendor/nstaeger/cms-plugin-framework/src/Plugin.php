@@ -13,9 +13,6 @@ use Nstaeger\CmsPluginFramework\Event\EventDispatcher;
 use Nstaeger\CmsPluginFramework\Templating\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * TODO cleanup dependencies
- */
 class Plugin extends Container
 {
     public function __construct(Configuration $configuration, Creator $creator)

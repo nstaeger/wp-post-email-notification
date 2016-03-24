@@ -79,7 +79,7 @@ class WordpressAssetBroker implements AssetBroker
             $path = $this->urlPrefix . $asset->getUrl();
             wp_enqueue_script($asset->getName(), $path);
 
-            // TODO solve in another way
+            // TODO this should be solved in another way
             wp_localize_script($asset->getName(), 'ajaxurl', admin_url('admin-ajax.php'));
         }
     }

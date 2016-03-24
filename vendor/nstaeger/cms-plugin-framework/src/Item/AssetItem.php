@@ -48,7 +48,7 @@ class AssetItem
      */
     public function getName()
     {
-        // TODO what about a real name?
+        // TODO generate real name
         return $this->url;
     }
 
