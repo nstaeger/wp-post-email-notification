@@ -40,12 +40,12 @@ gulp.task('clean', function (cb) {
     del([distDir]).then(cb());
 });
 
-gulp.task("webpack", function (callback) {
+gulp.task("webpack", function (cb) {
     webpack(require('./webpack.config.js'), function (err, stats) {
         if (err) {
             throw new gutil.PluginError("webpack", err);
         }
-        gutil.log("[webpack]", stats.toString({}));
-        callback();
+        // gutil.log("[webpack]", stats.toString({}));
+        cb();
     });
 });

@@ -1,3 +1,5 @@
+var webpack = require("webpack");
+
 module.exports = [
 
     {
@@ -12,7 +14,10 @@ module.exports = [
             alias: {
                 "vue-install": __dirname + "/js/vue-install.js"
             }
-        }
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({minimize: true})
+        ]
     }
 
 ];
