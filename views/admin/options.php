@@ -36,7 +36,7 @@
                 <tr>
                     <th><label for="add-email">Email</label></th>
                     <td>
-                        <input id="add-email" v-model="newSubscriber.email" name="email" class="regular-text" type="email" required>
+                        <input id="add-email" v-model="newSubscriber.email" class="regular-text" type="email" required>
                     </td>
                 </tr>
                 <tr>

@@ -2,10 +2,12 @@
 
 namespace Nstaeger\CmsPluginFramework\Broker\Wordpress;
 
+use Nstaeger\CmsPluginFramework\Broker\PermissionBroker;
 use Nstaeger\CmsPluginFramework\Broker\RestBroker;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Http\Kernel;
 use Nstaeger\CmsPluginFramework\Item\RestEndpointItem;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * TODO what about access control?
@@ -16,20 +18,27 @@ class WordpressRestBroker implements RestBroker
      * @var RestEndpointItem[]
      */
     private $endpoints;
+
     /**
      * @var Kernel
      */
     private $kernel;
 
     /**
+     * @var PermissionBroker
+     */
+    private $permssions;
+
+    /**
      * @var string
      */
     private $prefix;
 
-    public function __construct(Kernel $kernel, Configuration $config)
+    public function __construct(Configuration $config, Kernel $kernel, PermissionBroker $permissionBroker)
     {
         $this->endpoints = array();
         $this->kernel = $kernel;
+        $this->permssions = $permissionBroker;
         $this->prefix = $config->getRestPrefix();
 
         add_action(
@@ -94,23 +103,33 @@ class WordpressRestBroker implements RestBroker
         foreach ($this->endpoints as $endpoint) {
             $wordpress_pre = 'wp_ajax';
 
-            $function = [
-                $wordpress_pre,
-                $this->prefix,
-                $endpoint->getRoute(),
-                strtolower($endpoint->getMethod())
-            ];
+            if ($endpoint->accessibleForAuthorized()) {
+                $function = [
+                    $wordpress_pre,
+                    $this->prefix,
+                    $endpoint->getRoute(),
+                    strtolower($endpoint->getMethod())
+                ];
 
-            add_action(
-                implode('_', $function),
-                function () use ($endpoint) {
-                    $response = $this->kernel->handleRequest($endpoint->getAction());
-                    $response->sendContent();
-                    die();
-                }
-            );
+                add_action(
+                    implode('_', $function),
+                    function () use ($endpoint) {
+                        $perm = $endpoint->getRequiredPermission();
 
-            if ($endpoint->getEnabledForUnauthorized()) {
+                        if ($perm == null || ($perm != null && $this->permssions->has($perm))) {
+                            $response = $this->kernel->handleRequest($endpoint->getAction());
+                        }
+                        else {
+                            $response = new Response("Unauthorized", Response::HTTP_UNAUTHORIZED);
+                        }
+
+                        $response->send();
+                        die();
+                    }
+                );
+            }
+
+            if ($endpoint->accessibleForUnauthorized()) {
                 $function = [
                     $wordpress_pre,
                     'nopriv',

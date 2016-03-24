@@ -19,6 +19,7 @@ $config = require  __DIR__ . '/config.php';
 
 $plugin = new WpPostEmailNotificationPlugin(new Configuration($config), new WordpressCreator());
 
+$plugin->permission()->registerPermissionMapping('can_manage', 'manage_options');
 $plugin->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
 
 add_action(

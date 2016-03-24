@@ -19,15 +19,15 @@ module.exports = {
     ready: function () {
         this.$http.get(this.url + 'option_get').then(function (response) {
             this.$set('options', response.data);
-        });
+        }, this.handleError);
 
         this.$http.get(this.url + 'subscriber_get').then(function (response) {
             this.$set('subscribers', response.data);
-        });
+        }, this.handleError);
 
         this.$http.get(this.url + 'job_get').then(function (response) {
             this.$set('jobs', response.data);
-        });
+        }, this.handleError);
     },
 
     methods: {
@@ -38,6 +38,9 @@ module.exports = {
                 this.$set('subscribers', response.data);
                 this.$set('newSubscriber.email', "");
                 this.$set('updatingSubscribers', false);
+            }, function(response) {
+                this.$set('updatingSubscribers', false);
+                this.handleError(response);
             });
         },
 
@@ -52,7 +55,7 @@ module.exports = {
 
             this.$http.post(this.url + 'job_delete', data).then(function (response) {
                 this.$set('jobs', response.data);
-            });
+            }, this.handleError);
         },
 
         deleteSubscriber: function (id) {
@@ -66,13 +69,20 @@ module.exports = {
 
             this.$http.post(this.url + 'subscriber_delete', data).then(function (response) {
                 this.$set('subscribers', response.data);
-            });
+            }, this.handleError);
+        },
+
+        handleError: function(response) {
+            alert("Could not complete action: " + response.data);
         },
 
         updateOptions: function () {
             this.$set('updatingOptions', true);
             this.$http.post(this.url + 'option_put', this.options).then(function () {
                 this.$set('updatingOptions', false);
+            }, function(response) {
+                this.$set('updatingOptions', false);
+                this.handleError(response);
             });
         }
     }

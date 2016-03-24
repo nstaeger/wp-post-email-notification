@@ -19,15 +19,23 @@ class WpPostEmailNotificationPlugin extends Plugin
              ->withAction('AdminPageController@optionsPage')
              ->withAsset('js/bundle/admin-options.js');
 
-        // TODO access control!
-        $this->ajax()->delete('job')->resolveWith('AdminJobController@delete');
-        $this->ajax()->get('job')->resolveWith('AdminJobController@get');
-        $this->ajax()->get('option')->resolveWith('AdminOptionController@get');
-        $this->ajax()->put('option')->resolveWith('AdminOptionController@update');
-        $this->ajax()->post('subscribe')->resolveWith('FrontendSubscriberController@post')->forUnauthorized(true);
-        $this->ajax()->delete('subscriber')->resolveWith('AdminSubscriberController@delete');
-        $this->ajax()->get('subscriber')->resolveWith('AdminSubscriberController@get');
-        $this->ajax()->post('subscriber')->resolveWith('AdminSubscriberController@post');
+        $this->ajax()->delete('job')->resolveWith('AdminJobController@delete')->onlyWithPermission('can_manage');
+        $this->ajax()->get('job')->resolveWith('AdminJobController@get')->onlyWithPermission('can_manage');
+        $this->ajax()->get('option')->resolveWith('AdminOptionController@get')->onlyWithPermission('can_manage');
+        $this->ajax()->put('option')->resolveWith('AdminOptionController@update')->onlyWithPermission('can_manage');
+        $this->ajax()->post('subscribe')->resolveWith('FrontendSubscriberController@post')->enableForUnauthorized(true);
+        $this->ajax()
+             ->delete('subscriber')
+             ->resolveWith('AdminSubscriberController@delete')
+             ->onlyWithPermission('can_manage');
+        $this->ajax()
+             ->get('subscriber')
+             ->resolveWith('AdminSubscriberController@get')
+             ->onlyWithPermission('can_manage');
+        $this->ajax()
+             ->post('subscriber')
+             ->resolveWith('AdminSubscriberController@post')
+             ->onlyWithPermission('can_manage');
 
         $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));

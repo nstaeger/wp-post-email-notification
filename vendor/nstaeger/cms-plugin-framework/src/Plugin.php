@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Nstaeger\CmsPluginFramework\Broker\AssetBroker;
 use Nstaeger\CmsPluginFramework\Broker\EventBroker;
 use Nstaeger\CmsPluginFramework\Broker\MenuBroker;
+use Nstaeger\CmsPluginFramework\Broker\PermissionBroker;
 use Nstaeger\CmsPluginFramework\Broker\RestBroker;
 use Nstaeger\CmsPluginFramework\Creator\Creator;
 use Nstaeger\CmsPluginFramework\Event\EventDispatcher;
@@ -70,6 +71,14 @@ class Plugin extends Container
     public function menu()
     {
         return $this->make(MenuBroker::class);
+    }
+
+    /**
+     * @return PermissionBroker
+     */
+    public function permission()
+    {
+        return $this->make(PermissionBroker::class);
     }
 
     /**
