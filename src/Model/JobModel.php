@@ -85,7 +85,7 @@ class JobModel
 
     public function getAll()
     {
-        $query = sprintf("SELECT * FROM %s", self::TABLE_NAME);
+        $query = sprintf("SELECT * FROM %s ORDER BY id", self::TABLE_NAME);
 
         return $this->database->fetchAll($query);
     }
@@ -93,7 +93,7 @@ class JobModel
     public function getNextJob()
     {
         $query = sprintf(
-            "SELECT * FROM %s WHERE next_round_gmt <= '%s' LIMIT 1",
+            "SELECT * FROM %s WHERE next_round_gmt <= '%s' ORDER BY id LIMIT 1",
             self::TABLE_NAME,
             Time::now()->asSqlTimestamp()
         );

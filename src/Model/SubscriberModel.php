@@ -72,7 +72,7 @@ class SubscriberModel
 
     public function getAll()
     {
-        $query = sprintf("SELECT * FROM %s", self::TABLE_NAME);
+        $query = sprintf("SELECT * FROM %s ORDER BY id", self::TABLE_NAME);
 
         return $this->database->fetchAll($query);
     }
@@ -82,7 +82,7 @@ class SubscriberModel
         ArgCheck::isInt($offset);
         ArgCheck::isInt($count);
 
-        $query = sprintf("SELECT email FROM %s LIMIT %d, %d", self::TABLE_NAME, $offset, $count);
+        $query = sprintf("SELECT email FROM %s ORDER BY id LIMIT %d, %d", self::TABLE_NAME, $offset, $count);
 
         return $this->database->fetchAll($query);
     }
