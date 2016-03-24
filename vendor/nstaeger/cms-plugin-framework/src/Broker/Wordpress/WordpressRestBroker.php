@@ -5,12 +5,17 @@ namespace Nstaeger\CmsPluginFramework\Broker\Wordpress;
 use Nstaeger\CmsPluginFramework\Broker\RestBroker;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Http\Kernel;
+use Nstaeger\CmsPluginFramework\Item\RestEndpointItem;
 
 /**
  * TODO what about access control?
  */
 class WordpressRestBroker implements RestBroker
 {
+    /**
+     * @var RestEndpointItem[]
+     */
+    private $endpoints;
     /**
      * @var Kernel
      */
@@ -21,34 +26,108 @@ class WordpressRestBroker implements RestBroker
      */
     private $prefix;
 
-    public function __construct(Configuration $config, Kernel $kernel)
+    public function __construct(Kernel $kernel, Configuration $config)
     {
+        $this->endpoints = array();
         $this->kernel = $kernel;
         $this->prefix = $config->getRestPrefix();
+
+        add_action(
+            'init',
+            function () {
+                $this->loadEndpoints();
+            }
+        );
     }
 
-    public function registerEndpoint($route, $methods, $action, $nopriv = false)
+    /**
+     * @param string $route
+     * @return RestEndpointItem
+     */
+    public function delete($route)
     {
-        // TODO cleanup when working on access control
+        return $this->registerEndpoint('DELETE', $route);
+    }
 
-        $wordpress_pre = 'wp_ajax_';
-        $function = $wordpress_pre . $this->prefix . '_' . $route . '_' . strtolower($methods);
+    /**
+     * @param string $route
+     * @return RestEndpointItem
+     */
+    public function get($route)
+    {
+        return $this->registerEndpoint('GET', $route);
+    }
 
-        add_action($function, function () use ($action) {
-            $response = $this->kernel->handleRequest($action);
-            $response->sendContent();
-            die();
-        });
+    /**
+     * @param string $route
+     * @return RestEndpointItem
+     */
+    public function post($route)
+    {
+        return $this->registerEndpoint('POST', $route);
+    }
 
-        if ($nopriv)
-        {
-            $function = $wordpress_pre . 'nopriv_' . $this->prefix . '_' . $route . '_' . strtolower($methods);
+    /**
+     * @param string $route
+     * @return RestEndpointItem
+     */
+    public function put($route)
+    {
+        return $this->registerEndpoint('PUT', $route);
+    }
 
-            add_action($function, function () use ($action) {
-                $response = $this->kernel->handleRequest($action);
-                $response->sendContent();
-                die();
-            });
+    /**
+     * @param string $method
+     * @param string $route
+     * @return RestEndpointItem
+     */
+    public function registerEndpoint($method, $route)
+    {
+        $endpoint = new RestEndpointItem($method, $route);
+        $this->endpoints[] = $endpoint;
+
+        return $endpoint;
+    }
+
+    private function loadEndpoints()
+    {
+        foreach ($this->endpoints as $endpoint) {
+            $wordpress_pre = 'wp_ajax';
+
+            $function = [
+                $wordpress_pre,
+                $this->prefix,
+                $endpoint->getRoute(),
+                strtolower($endpoint->getMethod())
+            ];
+
+            add_action(
+                implode('_', $function),
+                function () use ($endpoint) {
+                    $response = $this->kernel->handleRequest($endpoint->getAction());
+                    $response->sendContent();
+                    die();
+                }
+            );
+
+            if ($endpoint->getEnabledForUnauthorized()) {
+                $function = [
+                    $wordpress_pre,
+                    'nopriv',
+                    $this->prefix,
+                    $endpoint->getRoute(),
+                    strtolower($endpoint->getMethod())
+                ];
+
+                add_action(
+                    implode('_', $function),
+                    function () use ($endpoint) {
+                        $response = $this->kernel->handleRequest($endpoint->getAction());
+                        $response->sendContent();
+                        die();
+                    }
+                );
+            }
         }
     }
 }

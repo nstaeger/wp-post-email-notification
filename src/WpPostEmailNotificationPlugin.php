@@ -20,14 +20,14 @@ class WpPostEmailNotificationPlugin extends Plugin
              ->withAsset('js/bundle/admin-options.js');
 
         // TODO access control!
-        $this->ajax()->registerEndpoint('job', 'DELETE', 'AdminJobController@delete');
-        $this->ajax()->registerEndpoint('job', 'GET', 'AdminJobController@get');
-        $this->ajax()->registerEndpoint('option', 'GET', 'AdminOptionController@get');
-        $this->ajax()->registerEndpoint('option', 'PUT', 'AdminOptionController@update');
-        $this->ajax()->registerEndpoint('subscribe', 'POST', 'FrontendSubscriberController@post', true);
-        $this->ajax()->registerEndpoint('subscriber', 'DELETE', 'AdminSubscriberController@delete');
-        $this->ajax()->registerEndpoint('subscriber', 'GET', 'AdminSubscriberController@get');
-        $this->ajax()->registerEndpoint('subscriber', 'POST', 'AdminSubscriberController@post');
+        $this->ajax()->delete('job')->resolveWith('AdminJobController@delete');
+        $this->ajax()->get('job')->resolveWith('AdminJobController@get');
+        $this->ajax()->get('option')->resolveWith('AdminOptionController@get');
+        $this->ajax()->put('option')->resolveWith('AdminOptionController@update');
+        $this->ajax()->post('subscribe')->resolveWith('FrontendSubscriberController@post')->forUnauthorized(true);
+        $this->ajax()->delete('subscriber')->resolveWith('AdminSubscriberController@delete');
+        $this->ajax()->get('subscriber')->resolveWith('AdminSubscriberController@get');
+        $this->ajax()->post('subscriber')->resolveWith('AdminSubscriberController@post');
 
         $this->events()->on('loaded', array($this, 'sendNotifications'));
         $this->events()->on('post-published', array($this, 'postPublished'));
