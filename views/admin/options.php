@@ -10,7 +10,7 @@
                 <th style="width: 20px;">ID</th>
                 <th class="column-primary">E-Mail Address</th>
                 <th>IP</th>
-                <th>Created</th>
+                <th>Created (GMT)</th>
                 <th style="width: 20px;"></th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                 <td>{{ subscriber.id }}</td>
                 <td>{{ subscriber.email }}</td>
                 <td>{{ subscriber.ip }}</td>
-                <td>{{ subscriber.created }}</td>
+                <td>{{ subscriber.created_gmt }}</td>
                 <td><span v-on:click="deleteSubscriber(subscriber.id)" class="dashicons dashicons-trash"></span></td>
             </tr>
             <tr v-if="subscribers.length == 0">
@@ -36,7 +36,7 @@
                 <tr>
                     <th><label for="add-email">Email</label></th>
                     <td>
-                        <input id="add-email" v-model="newSubscriber.email" class="regular-text" type="email" required>
+                        <input id="add-email" name="email" v-model="newSubscriber.email" class="regular-text" type="email" required>
                     </td>
                 </tr>
                 <tr>

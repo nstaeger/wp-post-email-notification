@@ -4,6 +4,7 @@ namespace Nstaeger\WpPostEmailNotification\Model;
 
 use Nstaeger\CmsPluginFramework\Broker\DatabaseBroker;
 use Nstaeger\CmsPluginFramework\Support\ArgCheck;
+use Nstaeger\CmsPluginFramework\Support\Time;
 use Symfony\Component\HttpFoundation\Request;
 
 class SubscriberModel
@@ -39,7 +40,7 @@ class SubscriberModel
             id int(10) NOT NULL AUTO_INCREMENT,
             email VARCHAR(255) NOT NULL,
             ip VARCHAR(255),
-            created DATETIME NOT NULL DEFAULT NOW(),
+            created_gmt DATETIME NOT NULL,
             PRIMARY KEY  id (id)
         ) DEFAULT CHARSET=utf8;";
 
@@ -93,8 +94,9 @@ class SubscriberModel
         ArgCheck::isIp($ip);
 
         $data = [
-            'email' => $email,
-            'ip'    => $ip
+            'email'   => $email,
+            'ip'      => $ip,
+            'created_gmt' => Time::now()->asSqlTimestamp()
         ];
 
         if ($this->database->insert(self::TABLE_NAME, $data) === false) {

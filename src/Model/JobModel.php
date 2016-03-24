@@ -52,7 +52,7 @@ class JobModel
             post_id int(10) NOT NULL,
             offset int(10) NOT NULL,
             next_round_gmt DATETIME NOT NULL,
-            created_gmt DATETIME NOT NULL DEFAULT NOW(),
+            created_gmt DATETIME NOT NULL,
             PRIMARY KEY  id (id)
         ) DEFAULT CHARSET=utf8;";
 
