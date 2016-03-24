@@ -94,19 +94,14 @@ class WpPostEmailNotificationPlugin extends Plugin
                 $postLink = get_permalink($post->ID);
                 $postTitle = $post->post_title;
 
+                $rep_search = ['@@blog.name', '@@post.author.name', '@@post.link', '@@post.title'];
+                $rep_replace = [$blogName, $postAuthorName, $postLink, $postTitle];
+
                 $subject = $this->option()->getEmailSubject();
-                $subject = str_replace(
-                    ['@@blog.name', '@@post.author.name', '@@post.link', '@@post.title'],
-                    [$blogName, $postAuthorName, $postLink, $postTitle],
-                    $subject
-                );
+                $subject = str_replace($rep_search, $rep_replace, $subject);
 
                 $message = $this->option()->getEmailBody();
-                $message = str_replace(
-                    ['@@blog.name', '@@post.author.name', '@@post.link', '@@post.title'],
-                    [$blogName, $postAuthorName, $postLink, $postTitle],
-                    $message
-                );
+                $message = str_replace($rep_search, $rep_replace, $message);
 
                 $headers[] = '';
 
