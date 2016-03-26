@@ -3,9 +3,11 @@
 /**
  * Plugin Name: WP Post Email Notification
  * Description: Send email notifications to subscribers when a new post is published
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author: Nicolai Stäger
  * Author URI: http://nstaeger.de
+ * License: GNU General Public License v2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 use Nstaeger\CmsPluginFramework\Item\AssetItem;
@@ -13,6 +15,8 @@ use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
 use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
 use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
+
+defined( 'ABSPATH' ) or die('No script kiddies please!');
 
 require __DIR__ . '/vendor/autoload.php';
 $config = require  __DIR__ . '/config.php';
