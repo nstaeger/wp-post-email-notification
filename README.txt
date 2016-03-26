@@ -1,6 +1,6 @@
 === WP Post Email Notification ===
 Contributors: nstaeger
-Tags: new, post, notification, email, subscribe, subscriber, newsletter
+Tags: new, post, notification, email, subscribe, subscriber, newsletter, widget
 Requires at least: 4.4.2
 Tested up to: 4.4.2
 Stable tag: 1.0
