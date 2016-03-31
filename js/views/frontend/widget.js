@@ -5,9 +5,10 @@ module.exports = {
     el: '.widget_subscriptionwidget',
 
     data: {
-        url:        ajaxurl + '?action=wppen_v1_',
-        success:    false,
-        subscriber: {
+        url:                  ajaxurl + '?action=wppen_v1_',
+        currentlySubscribing: false,
+        success:              false,
+        subscriber:           {
             email: ''
         }
     },
@@ -15,10 +16,14 @@ module.exports = {
     methods: {
 
         subscribe: function () {
-            this.$http.post(this.url + 'subscribe_post', this.subscriber).then(function (response) {
-                this.$set('success', true);
-                this.$set('subscriber.email', "");
-            });
+            if (!this.currentlySubscribing) {
+                this.$set('currentlySubscribing', true);
+                this.$http.post(this.url + 'subscribe_post', this.subscriber).then(function (response) {
+                    this.$set('currentlySubscribing', true);
+                    this.$set('success', true);
+                    this.$set('subscriber.email', "");
+                });
+            }
         }
 
     }
