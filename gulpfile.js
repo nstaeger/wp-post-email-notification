@@ -29,7 +29,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
             '!package.json',
             '!webpack.*'
         ])
-        .pipe(gulp.dest(distDir));
+        .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
 });
 
 
