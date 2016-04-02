@@ -27,6 +27,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
             '!composer.*',
             '!gulpfile.js',
             '!package.json',
+            '!README.md',
             '!webpack.*'
         ])
         .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
