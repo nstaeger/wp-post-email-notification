@@ -48,7 +48,9 @@ class ActionResolver
             $instance = $this->instantiateController($class);
 
             if (!method_exists($instance, $method)) {
-                throw new InvalidArgumentException(sprintf('Method "%s" does not exist on class "%s".', $method, $class));
+                throw new InvalidArgumentException(
+                    sprintf('Method "%s" does not exist on class "%s".', $method, $class)
+                );
             }
 
             return [$instance, $method];
@@ -79,7 +81,7 @@ class ActionResolver
 
         if (!$instance instanceof Controller) {
             throw new InvalidArgumentException(
-                sprintf('Class "%s" is not an instance of %s.', $class, Controller::class)
+                sprintf('Class "%s" is not an instance of %s.', $class, 'Nstaeger\CmsPluginFramework\Controller')
             );
         }
 
