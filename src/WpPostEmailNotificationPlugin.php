@@ -54,7 +54,7 @@ class WpPostEmailNotificationPlugin extends Plugin
      */
     public function job()
     {
-        return $this->make(JobModel::class);
+        return $this->make('Nstaeger\WpPostEmailNotification\Model\JobModel');
     }
 
     /**
@@ -62,7 +62,7 @@ class WpPostEmailNotificationPlugin extends Plugin
      */
     public function option()
     {
-        return $this->make(Option::class);
+        return $this->make('Nstaeger\WpPostEmailNotification\Model\Option');
     }
 
     public function postPublished($id)
@@ -124,6 +124,6 @@ class WpPostEmailNotificationPlugin extends Plugin
      */
     public function subscriber()
     {
-        return $this->make(SubscriberModel::class);
+        return $this->make('Nstaeger\WpPostEmailNotification\Model\SubscriberModel');
     }
 }

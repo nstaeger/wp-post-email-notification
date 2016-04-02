@@ -4,7 +4,6 @@ namespace Nstaeger\CmsPluginFramework;
 
 use Illuminate\Container\Container;
 use Nstaeger\CmsPluginFramework\Broker\AssetBroker;
-use Nstaeger\CmsPluginFramework\Broker\EventBroker;
 use Nstaeger\CmsPluginFramework\Broker\MenuBroker;
 use Nstaeger\CmsPluginFramework\Broker\PermissionBroker;
 use Nstaeger\CmsPluginFramework\Broker\RestBroker;
@@ -19,16 +18,19 @@ class Plugin extends Container
     {
         self::setInstance($this);
 
-        $this->instance(Configuration::class, $configuration);
-        $this->singleton(EventDispatcher::class, EventDispatcher::class);
+        $this->instance('Nstaeger\CmsPluginFramework\Configuration', $configuration);
+        $this->singleton(
+            'Nstaeger\CmsPluginFramework\Event\EventDispatcher',
+            'Nstaeger\CmsPluginFramework\Event\EventDispatcher'
+        );
         $creator->build($this);
 
         // register regular events from system
-        $this->make(EventBroker::class)->fireAll($this->events());
+        $this->make('Nstaeger\CmsPluginFramework\Broker\EventBroker')->fireAll($this->events());
 
         // regular request
         $this->singleton(
-            Request::class,
+            'Symfony\Component\HttpFoundation\Request',
             function () {
                 return Request::createFromGlobals();
             }
@@ -43,7 +45,7 @@ class Plugin extends Container
      */
     public function ajax()
     {
-        return $this->make(RestBroker::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Broker\RestBroker');
     }
 
     /**
@@ -51,7 +53,7 @@ class Plugin extends Container
      */
     public function asset()
     {
-        return $this->make(AssetBroker::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Broker\AssetBroker');
     }
 
     /**
@@ -59,7 +61,7 @@ class Plugin extends Container
      */
     public function events()
     {
-        return $this->make(EventDispatcher::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Event\EventDispatcher');
     }
 
     /**
@@ -67,7 +69,7 @@ class Plugin extends Container
      */
     public function menu()
     {
-        return $this->make(MenuBroker::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Broker\MenuBroker');
     }
 
     /**
@@ -75,7 +77,7 @@ class Plugin extends Container
      */
     public function permission()
     {
-        return $this->make(PermissionBroker::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Broker\PermissionBroker');
     }
 
     /**
@@ -83,7 +85,7 @@ class Plugin extends Container
      */
     public function renderer()
     {
-        return $this->make(TemplateRenderer::class);
+        return $this->make('Nstaeger\CmsPluginFramework\Templating\TemplateRenderer');
     }
 
     /**

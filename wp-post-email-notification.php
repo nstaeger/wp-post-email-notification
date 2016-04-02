@@ -14,7 +14,6 @@ use Nstaeger\CmsPluginFramework\Item\AssetItem;
 use Nstaeger\CmsPluginFramework\Configuration;
 use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
 use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
-use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
 
 defined('ABSPATH') or die('No script kiddies please!');
 
@@ -29,7 +28,7 @@ $plugin->asset()->addAsset(new AssetItem('js/bundle/frontend-widget.js'));
 add_action(
     'widgets_init',
     function () {
-        register_widget(SubscriptionWidget::class);
+        register_widget('Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget');
     },
     10,
     2

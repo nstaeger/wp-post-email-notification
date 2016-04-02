@@ -54,9 +54,11 @@ class WordpressMenuBroker implements MenuBroker
     private function registerItems()
     {
         foreach ($this->menuItems as $menuItem) {
-            if (!empty($menuItem->getAssets()))
+            $menuItemAsset = $menuItem->getAssets();
+
+            if (!empty($menuItemAsset))
             {
-                $this->assetBroker->addAdminAssets($menuItem->getAssets());
+                $this->assetBroker->addAdminAssets($menuItemAsset);
             }
 
             add_menu_page(
