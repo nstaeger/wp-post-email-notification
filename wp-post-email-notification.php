@@ -16,10 +16,10 @@ use Nstaeger\CmsPluginFramework\Creator\WordpressCreator;
 use Nstaeger\WpPostEmailNotification\WpPostEmailNotificationPlugin;
 use Nstaeger\WpPostEmailNotification\Widget\SubscriptionWidget;
 
-defined( 'ABSPATH' ) or die('No script kiddies please!');
+defined('ABSPATH') or die('No script kiddies please!');
 
 require __DIR__ . '/vendor/autoload.php';
-$config = require  __DIR__ . '/config.php';
+$config = require __DIR__ . '/config.php';
 
 $plugin = new WpPostEmailNotificationPlugin(new Configuration($config), new WordpressCreator());
 

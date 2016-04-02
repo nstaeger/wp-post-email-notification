@@ -42,6 +42,13 @@ class WpPostEmailNotificationPlugin extends Plugin
         $this->events()->on('post-unpublished', array($this, 'postUnpublished'));
     }
 
+    public function activate()
+    {
+        $this->job()->createTable();
+        $this->subscriber()->createTable();
+        $this->option()->createDefaults();
+    }
+
     /**
      * @return JobModel
      */
@@ -118,12 +125,5 @@ class WpPostEmailNotificationPlugin extends Plugin
     public function subscriber()
     {
         return $this->make(SubscriberModel::class);
-    }
-
-    public function activate()
-    {
-        $this->job()->createTable();
-        $this->subscriber()->createTable();
-        $this->option()->createDefaults();
     }
 }
