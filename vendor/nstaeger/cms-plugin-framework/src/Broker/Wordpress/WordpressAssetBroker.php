@@ -64,7 +64,8 @@ class WordpressAssetBroker implements AssetBroker
     private function enqueAdminAssets($hook)
     {
         foreach ($this->adminAssets as $asset) {
-            if (!empty($asset->getHook()) && strpos($hook, $asset->getHook()) === false) {
+            $assetHook = $asset->getHook();
+            if (!empty($assetHook) && strpos($hook, $assetHook) === false) {
                 continue;
             }
 
