@@ -19,7 +19,8 @@ var distDir = '_dist';
 gulp.task('build', ['clean', 'webpack'], function () {
     return gulp.src([
             '**',
-            '!_dist/{**,}',
+            '!_dist{/**,}',
+            '!_misc{/**,}',
             '!js/*',
             '!js/views/**',
             '!node_modules{/**,}',
