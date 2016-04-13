@@ -34,9 +34,10 @@ This plugin is open source and of course available on [GitHub](https://github.co
 == Frequently Asked Questions ==
 
 
-== Screenshot ==
+== Screenshots ==
 
-Will be available soon.
+1. The settings-page for the plugin within the administration area.
+2. Adding a widget to allow subscriptions.
 
 
 == Changelog ==
