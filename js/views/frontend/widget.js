@@ -2,7 +2,7 @@ var Vue = require('vue-install');
 
 module.exports = {
 
-    el: '.widget_subscriptionwidget',
+    el: '.wp_post_email_notification',
 
     data: {
         url:                  ajaxurl + '?action=wppen_v1_',

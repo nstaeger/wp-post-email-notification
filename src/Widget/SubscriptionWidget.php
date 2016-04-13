@@ -20,7 +20,7 @@ class SubscriptionWidget extends \WP_Widget
         $this->renderer = WpPostEmailNotificationPlugin::getInstance()->renderer();
 
         $widget_ops = array(
-            'class_name'  => 'SubscriptionWidget',
+            'classname'   => 'wp_post_email_notification',
             'description' => 'Allow people to subscribe to new post notifications.',
         );
 
