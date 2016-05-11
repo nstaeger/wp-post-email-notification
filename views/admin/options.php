@@ -114,7 +114,7 @@
                 <td><span v-on:click="deleteJob(job.id)" class="dashicons dashicons-trash"></span></td>
             </tr>
             <tr v-if="jobs.length == 0">
-                <td colspan="5"><i>none</i></td>
+                <td colspan="6"><i>none</i></td>
             </tr>
         </tbody>
     </table>
