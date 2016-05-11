@@ -39,6 +39,13 @@ This plugin is open source and of course available on [GitHub](https://github.co
 
 == Changelog ==
 
+= 1.0.2 =
+
+Published on 11th May 2016
+
+* fix(transit-post): only schedule job if post-type is 'post'
+* fix(admin options view): update colspan for job-table, when no jobs are scheduled
+
 = 1.0.1 =
 
 Published on 13th April 2016
