@@ -2,8 +2,8 @@
 Contributors: nstaeger
 Tags: new, post, notification, email, subscribe, subscriber, newsletter, widget
 Requires at least: 4.4.2
-Tested up to: 4.5.0
-Stable tag: 1.0.1
+Tested up to: 4.5.2
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,13 @@ This plugin is open source and of course available on [GitHub](https://github.co
 
 
 == Changelog ==
+
+= 1.0.2 =
+
+Published on 11th May 2016
+
+* fix(transit-post): only schedule job if post-type is 'post'
+* fix(admin options view): update colspan for job-table, when no jobs are scheduled
 
 = 1.0.1 =
 
