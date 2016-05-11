@@ -3,7 +3,7 @@
 /**
  * Plugin Name: WP Post Email Notification
  * Description: Send email notifications to subscribers when a new post is published
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Nicolai Stäger
  * Author URI: http://nstaeger.de
  * License: GNU General Public License v2 or later
