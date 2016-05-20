@@ -32,14 +32,14 @@ class WordpressAssetBroker implements AssetBroker
         add_action(
             'admin_enqueue_scripts',
             function ($hook) {
-                $this->enqueAdminAssets($hook);
+                $this->enqueueAdminAssets($hook);
             }
         );
 
         add_action(
             'wp_enqueue_scripts',
             function () {
-                $this->enqueAssets();
+                $this->enqueueAssets();
             }
         );
     }
@@ -61,21 +61,23 @@ class WordpressAssetBroker implements AssetBroker
         $this->assets[] = $asset;
     }
 
-    private function enqueAdminAssets($hook)
+    private function enqueueAdminAssets($hook)
     {
         foreach ($this->adminAssets as $asset) {
             if (!empty($asset->getHook()) && strpos($hook, $asset->getHook()) === false) {
                 continue;
             }
 
+            // TODO register script first with wp_register_script
             $path = $this->urlPrefix . $asset->getUrl();
             wp_enqueue_script($asset->getName(), $path);
         }
     }
 
-    private function enqueAssets()
+    private function enqueueAssets()
     {
         foreach ($this->assets as $asset) {
+            // TODO register script first with wp_register_script
             $path = $this->urlPrefix . $asset->getUrl();
             wp_enqueue_script($asset->getName(), $path);
 
