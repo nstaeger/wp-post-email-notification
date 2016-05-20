@@ -1,6 +1,4 @@
 /_dist
 /js/bundle
 /node_modules
-/vendor/*
-!/vendor/nstaeger/
-!/vendor/nstaeger/cms-plugin-framework
+/vendor
