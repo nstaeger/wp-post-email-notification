@@ -39,6 +39,13 @@ This plugin is open source and of course available on [GitHub](https://github.co
 
 == Changelog ==
 
+= 1.0.3 =
+
+Published on 1st December 2016
+
+* framework update
+* minor improvements
+
 = 1.0.2 =
 
 Published on 11th May 2016
