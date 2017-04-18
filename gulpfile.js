@@ -4,6 +4,7 @@
  *
  * gulp build
  * gulp clean
+ * gulp webpack
  */
 
 var del     = require('del'),
@@ -34,7 +35,6 @@ gulp.task('build', ['clean', 'webpack'], function () {
         .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
 });
 
-
 /**
  * Clean the dist folder
  */
@@ -42,6 +42,9 @@ gulp.task('clean', function (cb) {
     del([distDir]).then(cb());
 });
 
+/**
+ * Run Webpack
+ */
 gulp.task("webpack", function (cb) {
     webpack(require('./webpack.config.js'), function (err, stats) {
         if (err) {
