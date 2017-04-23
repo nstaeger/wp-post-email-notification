@@ -22,6 +22,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
             '**',
             '!_dist{/**,}',
             '!_misc{/**,}',
+            '!_scripts{/**,}',
             '!js/*',
             '!js/views/**',
             '!node_modules{/**,}',
@@ -30,6 +31,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
             '!composer.*',
             '!gulpfile.js',
             '!package.json',
+            '!phpunit.xml',
             '!README.md',
             '!webpack.*'
         ])
