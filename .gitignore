@@ -2,3 +2,4 @@
 /js/bundle
 /node_modules
 /vendor
+composer.lock
