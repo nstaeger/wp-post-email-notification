@@ -25,6 +25,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
             '!js/*',
             '!js/views/**',
             '!node_modules{/**,}',
+            '!tmp{/**,}',
             '!.gitignore',
             '!composer.*',
             '!gulpfile.js',

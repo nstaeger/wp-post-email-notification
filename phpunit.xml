@@ -1,0 +1,22 @@
+<phpunit
+        bootstrap="vendor/nstaeger/cms-plugin-framework/tests/bootstrap/bootstrap.php"
+        backupGlobals="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+    <php>
+        <const name="PLUGIN_NAME" value="wp-post-email-notification.php"/>
+        <const name="PLUGIN_FOLDER" value="."/>
+        <const name="PLUGIN_PATH" value="./wp-post-email-notification.php"/>
+    </php>
+    <testsuites>
+        <testsuite name="unit">
+            <directory suffix="Test.php">./tests/unit/</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix="Test.php">./tests/integration/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
