@@ -7,9 +7,9 @@
  * gulp webpack
  */
 
-var del     = require('del'),
-    gulp    = require('gulp'),
-    gutil   = require("gulp-util"),
+var del = require('del'),
+    gulp = require('gulp'),
+    gutil = require("gulp-util"),
     webpack = require('webpack');
 
 var distDir = '_dist';
@@ -19,22 +19,23 @@ var distDir = '_dist';
  */
 gulp.task('build', ['clean', 'webpack'], function () {
     return gulp.src([
-            '**',
-            '!_dist{/**,}',
-            '!_misc{/**,}',
-            '!_scripts{/**,}',
-            '!js/*',
-            '!js/views/**',
-            '!node_modules{/**,}',
-            '!tmp{/**,}',
-            '!.gitignore',
-            '!composer.*',
-            '!gulpfile.js',
-            '!package.json',
-            '!phpunit.xml',
-            '!README.md',
-            '!webpack.*'
-        ])
+        '**',
+        '!_dist{/**,}',
+        '!_misc{/**,}',
+        '!_scripts{/**,}',
+        '!js/*',
+        '!js/views/**',
+        '!node_modules{/**,}',
+        '!**/{T,t}ests{/**,}',
+        '!tmp{/**,}',
+        '!.gitignore',
+        '!composer.*',
+        '!gulpfile.js',
+        '!package.json',
+        '!phpunit.xml',
+        '!README.md',
+        '!webpack.*'
+    ])
         .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
 });
 
