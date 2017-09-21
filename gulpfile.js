@@ -28,6 +28,7 @@ gulp.task('build', ['clean', 'webpack'], function () {
         '!node_modules{/**,}',
         '!**/{T,t}ests{/**,}',
         '!tmp{/**,}',
+        '!vendor/nstaeger/cms-plugin-framework/_build{/**,}',
         '!.gitignore',
         '!composer.*',
         '!gulpfile.js',

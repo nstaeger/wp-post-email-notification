@@ -6,12 +6,13 @@ env:
 - WP_PROJECT_TYPE=plugin WP_VERSION=latest WP_MULTISITE=0 WP_TEST_URL=http://localhost:12000 WP_TEST_USER=test WP_TEST_USER_PASS=test
 
 install:
-  - composer install
+  - composer install --no-dev
+  - npm install -g gulp
   - npm install
   - gulp webpack
 
 before_script:
-  - ./vendor/nstaeger/cms-plugin-framework/scripts/test/install test root '' localhost $WP_VERSION
+  - ./vendor/nstaeger/cms-plugin-framework/_build/test/install test root '' localhost $WP_VERSION
 
 script:
   - phpunit
