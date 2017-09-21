@@ -61,19 +61,45 @@
         <table class="form-table">
             <tbody>
                 <tr>
-                    <th><label for="emailSubject">Email Subject</label></th>
-                    <td><input id="emailSubject" type="text" v-model="options.emailSubject" class="regular-text"/></td>
+                    <th>
+                        <label for="emailSubject">Email Subject</label>
+                    </th>
+                    <td>
+                        <input id="emailSubject" type="text" v-model="options.emailSubject" class="regular-text"/>
+                    </td>
                 </tr>
                 <tr>
-                    <th><label for="emailBody">Email Body</label></th>
+                    <th>
+                        <label for="emailBody">Email Body</label>
+                    </th>
                     <td>
                         <textarea id="emailBody" v-model="options.emailBody" class="large-text" cols="50" rows="10"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <th><label for="numberOfMailsSendPerRequest">Number of emails to be send per request</label></th>
+                    <th>
+                        <label for="numberOfMailsSendPerBatch">Number of emails to be send per batch</label>
+                    </th>
                     <td>
-                        <input id="numberOfMailsSendPerRequest" type="number" v-model="options.numberOfMailsSendPerRequest" class="regular-text"/>
+                        <input id="numberOfMailsSendPerBatch" type="number" v-model="options.numberOfMailsSendPerBatch" class="regular-text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="jobInitialTimeWait">Initial job time wait</label>
+                    </th>
+                    <td>
+                        <input id="jobInitialTimeout" type="number" v-model="options.jobInitialTimeWait" class="regular-text"/>
+                        <p class="description">Delay in seconds until the first batch of email is being send by a job after it was scheduled.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="jobBatchTimeWait">Batch job time wait</label>
+                    </th>
+                    <td>
+                        <input id="jobBatchTimeWait" type="number" v-model="options.jobBatchTimeWait" class="regular-text"/>
+                        <p class="description">Delay in seconds between two batches of sending emails by a job.</p>
                     </td>
                 </tr>
                 <tr>

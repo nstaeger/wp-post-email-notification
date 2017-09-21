@@ -9,7 +9,13 @@ class Option
 {
     const EMAIL_BODY = "emailBody";
     const EMAIL_SUBJECT = "emailSubject";
-    const NUMBER_OF_EMAILS_SEND_PER_REQUEST = 'numberOfEmailsSendPerRequest';
+    const JOB_BATCH_TIME_WAIT = 'jobBatchTimeWait';
+    const JOB_INITIAL_TIME_WAIT = 'jobInitialTimeWait';
+    const NUMBER_OF_EMAILS_SEND_PER_BATCH = 'numberOfEmailsSendPerRequest';
+
+    const DEFAULT_JOB_BATCH_TIME_WAIT = 10;
+    const DEFAULT_JOB_INITIAL_TIME_WAIT = 60;
+    const DEFAULT_NUMBER_OF_EMAILS_SEND_PER_BATCH = 5;
 
     /**
      * @var OptionBroker
@@ -25,22 +31,28 @@ class Option
     {
         $this->setEmailBody("Hi,\n\n@@post.author.name just published a new post named @@post.title. You can view the full article here:\n\n@@post.link");
         $this->setEmailSubject("New Post on @@blog.name");
-        $this->setNumberOfEmailsSendPerRequest(5);
+        $this->setNumberOfEmailsSendPerBatch(self::DEFAULT_NUMBER_OF_EMAILS_SEND_PER_BATCH);
+        $this->setJobInitialTimeWait(self::DEFAULT_JOB_INITIAL_TIME_WAIT);
+        $this->setJobBatchTimeWait(self::JOB_BATCH_TIME_WAIT);
     }
 
     public function deleteAll()
     {
         $this->optionBroker->delete(self::EMAIL_BODY);
         $this->optionBroker->delete(self::EMAIL_SUBJECT);
-        $this->optionBroker->delete(self::NUMBER_OF_EMAILS_SEND_PER_REQUEST);
+        $this->optionBroker->delete(self::NUMBER_OF_EMAILS_SEND_PER_BATCH);
+        $this->optionBroker->delete(self::JOB_INITIAL_TIME_WAIT);
+        $this->optionBroker->delete(self::JOB_BATCH_TIME_WAIT);
     }
 
     public function getAll()
     {
         return [
-            'emailBody'                   => $this->getEmailBody(),
-            'emailSubject'                => $this->getEmailSubject(),
-            'numberOfMailsSendPerRequest' => $this->getNumberOfEmailsSendPerRequest()
+            'emailBody' => $this->getEmailBody(),
+            'emailSubject' => $this->getEmailSubject(),
+            'jobBatchTimeWait' => $this->getJobBatchTimeWait(),
+            'jobInitialTimeWait' => $this->getJobInitialTimeWait(),
+            'numberOfMailsSendPerBatch' => $this->getNumberOfEmailsSendPerRequest()
         ];
     }
 
@@ -54,9 +66,20 @@ class Option
         return $this->optionBroker->get(self::EMAIL_SUBJECT);
     }
 
+    public function getJobBatchTimeWait()
+    {
+        return $this->optionBroker->get(self::JOB_BATCH_TIME_WAIT, self::DEFAULT_JOB_BATCH_TIME_WAIT);
+    }
+
+    public function getJobInitialTimeWait()
+    {
+        return $this->optionBroker->get(self::JOB_INITIAL_TIME_WAIT, self::DEFAULT_JOB_INITIAL_TIME_WAIT);
+    }
+
     public function getNumberOfEmailsSendPerRequest()
     {
-        return $this->optionBroker->get(self::NUMBER_OF_EMAILS_SEND_PER_REQUEST);
+        return $this->optionBroker->get(self::NUMBER_OF_EMAILS_SEND_PER_BATCH,
+                                        self::DEFAULT_NUMBER_OF_EMAILS_SEND_PER_BATCH);
     }
 
     public function setAll($values)
@@ -71,8 +94,16 @@ class Option
             $this->setEmailSubject($values['emailSubject']);
         }
 
-        if (isset($values['numberOfMailsSendPerRequest'])) {
-            $this->setNumberOfEmailsSendPerRequest($values['numberOfMailsSendPerRequest']);
+        if (isset($values['numberOfMailsSendPerBatch'])) {
+            $this->setNumberOfEmailsSendPerBatch($values['numberOfMailsSendPerBatch']);
+        }
+
+        if (isset($values['jobInitialTimeWait'])) {
+            $this->setJobInitialTimeWait($values['jobInitialTimeWait']);
+        }
+
+        if (isset($values['jobBatchTimeWait'])) {
+            $this->setJobBatchTimeWait($values['jobBatchTimeWait']);
         }
     }
 
@@ -90,10 +121,24 @@ class Option
         return $this->optionBroker->store(self::EMAIL_SUBJECT, $value);
     }
 
-    public function setNumberOfEmailsSendPerRequest($value)
+    public function setJobBatchTimeWait($value)
     {
         ArgCheck::isInt($value);
 
-        $this->optionBroker->store(self::NUMBER_OF_EMAILS_SEND_PER_REQUEST, $value);
+        $this->optionBroker->store(self::JOB_BATCH_TIME_WAIT, $value);
+    }
+
+    public function setJobInitialTimeWait($value)
+    {
+        ArgCheck::isInt($value);
+
+        $this->optionBroker->store(self::JOB_INITIAL_TIME_WAIT, $value);
+    }
+
+    public function setNumberOfEmailsSendPerBatch($value)
+    {
+        ArgCheck::isInt($value);
+
+        $this->optionBroker->store(self::NUMBER_OF_EMAILS_SEND_PER_BATCH, $value);
     }
 }

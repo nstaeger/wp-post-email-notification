@@ -15,9 +15,15 @@ class JobModel
      */
     private $database;
 
-    public function __construct(DatabaseBroker $database)
+    /**
+     * @var Option
+     */
+    private $options;
+
+    public function __construct(DatabaseBroker $database, Option $options)
     {
         $this->database = $database;
+        $this->options = $options;
     }
 
     public function completeJob($id)
@@ -36,7 +42,7 @@ class JobModel
         $data = [
             'offset'         => 0,
             'post_id'        => $post_id,
-            'next_round_gmt' => Time::now()->plusMinutes(1)->asSqlTimestamp(),
+            'next_round_gmt' => Time::now()->addSeconds($this->options->getJobInitialTimeWait())->asSqlTimestamp(),
             'created_gmt'    => Time::now()->asSqlTimestamp()
         ];
 
@@ -123,7 +129,7 @@ class JobModel
             "UPDATE %s SET offset = offset + %u, next_round_gmt = '%s' WHERE id = %u",
             self::TABLE_NAME,
             $addToOffset,
-            Time::now()->addSeconds(2)->asSqlTimestamp(),
+            Time::now()->addSeconds($this->options->getJobBatchTimeWait())->asSqlTimestamp(),
             $id
         );
 
