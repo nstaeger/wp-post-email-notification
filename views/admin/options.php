@@ -16,8 +16,8 @@
         </thead>
         <tbody>
             <tr v-for="subscriber in subscribers">
-                <td>{{ subscriber.id }}</td>
-                <td>{{ subscriber.email }}</td>
+                <td class="check-column" style="padding: 8px 10px;">{{ subscriber.id }}</td>
+                <td class="column-primary">{{ subscriber.email }}</td>
                 <td>{{ subscriber.ip }}</td>
                 <td>{{ subscriber.created_gmt }}</td>
                 <td><span v-on:click="deleteSubscriber(subscriber.id)" class="dashicons dashicons-trash"></span></td>
