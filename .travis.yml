@@ -19,6 +19,7 @@ script:
 
 before_deploy:
   - gulp build
+  - gulp php7-compatibility
 
 deploy:
   provider: script
