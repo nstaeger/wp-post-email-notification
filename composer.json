@@ -1,7 +1,7 @@
 {
     "name": "nstaeger/wp-post-email-notification",
     "description": "A WordPress plugin sending email notifications to subscribers when a new post is published.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "authors": [
         {
             "name": "Nicolai Stäger",

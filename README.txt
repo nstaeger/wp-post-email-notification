@@ -4,7 +4,7 @@ Tags: new, post, notification, email, subscribe, subscriber, newsletter, widget
 Requires at least: 4.4.2
 Tested up to: 4.9.6
 Requires PHP: 5.6
-Stable tag: 1.0.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,14 @@ This plugin is open source and of course available on [GitHub](https://github.co
 
 
 == Changelog ==
+
+= 1.1.0 =
+
+Published on 18th May 2018
+
+* make job timeouts and batch size configurable
+* framework update
+* minor improvements
 
 = 1.0.3 =
 
