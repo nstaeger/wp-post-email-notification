@@ -20,6 +20,7 @@ var distDir = '_dist';
 gulp.task('build', ['clean', 'webpack'], function () {
     return gulp.src([
         '**',
+        '!_build{/**,}',
         '!_dist{/**,}',
         '!_misc{/**,}',
         '!_scripts{/**,}',
@@ -37,6 +38,12 @@ gulp.task('build', ['clean', 'webpack'], function () {
         '!README.md',
         '!webpack.*'
     ])
+        .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
+});
+
+gulp.task('php7-compatibility', function() {
+    return gulp.src([
+        '_build/override/**'])
         .pipe(gulp.dest(distDir + "/wp-post-email-notification"));
 });
 
