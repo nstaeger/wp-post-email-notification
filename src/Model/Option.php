@@ -33,7 +33,7 @@ class Option
         $this->setEmailSubject("New Post on @@blog.name");
         $this->setNumberOfEmailsSendPerBatch(self::DEFAULT_NUMBER_OF_EMAILS_SEND_PER_BATCH);
         $this->setJobInitialTimeWait(self::DEFAULT_JOB_INITIAL_TIME_WAIT);
-        $this->setJobBatchTimeWait(self::JOB_BATCH_TIME_WAIT);
+        $this->setJobBatchTimeWait(self::DEFAULT_JOB_BATCH_TIME_WAIT);
     }
 
     public function deleteAll()
