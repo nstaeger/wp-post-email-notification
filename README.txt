@@ -4,7 +4,7 @@ Tags: new, post, notification, email, subscribe, subscriber, newsletter, widget
 Requires at least: 4.4.2
 Tested up to: 4.9.6
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,12 @@ This plugin is open source and of course available on [GitHub](https://github.co
 
 
 == Changelog ==
+
+= 1.1.1 =
+
+Published on 19th May 2018
+
+* fix bug in registration of default options that prevents installation/activation
 
 = 1.1.0 =
 
